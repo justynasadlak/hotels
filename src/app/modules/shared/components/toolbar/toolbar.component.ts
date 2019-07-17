@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {MatDialog} from '@angular/material';
 import {LoginDialogComponent} from '../../../user/login-dialog/login-dialog.component';
 
@@ -9,14 +9,17 @@ import {LoginDialogComponent} from '../../../user/login-dialog/login-dialog.comp
 })
 export class ToolbarComponent implements OnInit {
 
-  constructor(public dialog: MatDialog) { }
+  constructor(public dialog: MatDialog) {
+  }
 
   ngOnInit() {
   }
 
   onLogin() {
     this.dialog.open(LoginDialogComponent, {
-      width: '250px'
+      disableClose: true,
+      width: '250px',
+      maxHeight: 350
     });
   }
 }

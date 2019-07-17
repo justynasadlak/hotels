@@ -1,0 +1,14 @@
+<div class="login__wrapper">
+    <form class="example-form" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <mat-form-field>
+          <input matInput type="text" placeholder="Login" formControlName="login">
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput type="password" placeholder="Password" formControlName="password">
+        </mat-form-field>
+        <button mat-flat-button color="primary" type="submit" >
+          SIGN IN
+        </button>
+        <button mat-button mat-dialog-close>Cancel</button>
+    </form>
+</div>

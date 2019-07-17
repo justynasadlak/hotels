@@ -7,6 +7,7 @@ import { LandingPageComponent } from './components/landing-page/landing-page.com
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {SharedModule} from './modules/shared/shared.module';
 import { LoginDialogComponent } from './modules/user/login-dialog/login-dialog.component';
+import {ReactiveFormsModule} from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import { LoginDialogComponent } from './modules/user/login-dialog/login-dialog.c
   imports: [
     BrowserModule,
     AppRoutingModule,
+    ReactiveFormsModule,
     BrowserAnimationsModule,
     SharedModule
   ],
