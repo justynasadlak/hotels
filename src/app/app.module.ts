@@ -3,15 +3,24 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { LandingPageComponent } from './components/landing-page/landing-page.component';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {SharedModule} from './modules/shared/shared.module';
+import { LoginDialogComponent } from './modules/user/login-dialog/login-dialog.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    LandingPageComponent,
+    LoginDialogComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    SharedModule
   ],
+  entryComponents: [LoginDialogComponent],
   providers: [],
   bootstrap: [AppComponent]
 })
