@@ -7,19 +7,16 @@ import {LoginDialogComponent} from '../../../user/login-dialog/login-dialog.comp
   templateUrl: './toolbar.component.html',
   styleUrls: ['./toolbar.component.scss']
 })
-export class ToolbarComponent implements OnInit {
+export class ToolbarComponent {
 
   constructor(public dialog: MatDialog) {
-  }
-
-  ngOnInit() {
   }
 
   onLogin() {
     this.dialog.open(LoginDialogComponent, {
       disableClose: true,
       width: '250px',
-      maxHeight: 350
+      maxHeight: '350px'
     });
   }
 }
