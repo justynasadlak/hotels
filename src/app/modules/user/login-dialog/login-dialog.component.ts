@@ -15,8 +15,8 @@ export class LoginDialogComponent {
 
   private loginForm = this.formBuilder.group({
     login: ['', [Validators.required, Validators.maxLength(16)]],
-    password: ['', [Validators.required, Validators.minLength(8), Validators.pattern('[A-Z]+')]],
-    repeatPassword: ['', [Validators.required, Validators.minLength(8), Validators.pattern('[A-Z]+')]]
+    password: ['', [Validators.required, Validators.minLength(8), Validators.pattern('^.*[A-Z]+.*$')]],
+    repeatPassword: ['', [Validators.required, Validators.minLength(8), Validators.pattern('^.*[A-Z]+.*$')]]
   });
 
   onSubmit() {
