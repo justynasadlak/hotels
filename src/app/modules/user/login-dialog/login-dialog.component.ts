@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {FormBuilder, Validators} from '@angular/forms';
 
 @Component({
@@ -8,15 +8,27 @@ import {FormBuilder, Validators} from '@angular/forms';
 })
 export class LoginDialogComponent {
 
+  register = false;
+
   constructor(private formBuilder: FormBuilder) {
   }
 
   private loginForm = this.formBuilder.group({
-    login: ['', Validators.required],
-    password: ['', Validators.required]
+    login: ['', [Validators.required, Validators.maxLength(16)]],
+    password: ['', [Validators.required, Validators.minLength(8), Validators.pattern('[A-Z]+')]],
+    repeatPassword: ['', [Validators.required, Validators.minLength(8), Validators.pattern('[A-Z]+')]]
   });
 
   onSubmit() {
     console.log('zalogowany');
+  }
+
+  onRegister() {
+    this.register = true;
+    console.log('do rejestracji');
+  }
+
+  getButtonName() {
+    return this.register ? 'SIGN UP' : 'SIGN IN';
   }
 }

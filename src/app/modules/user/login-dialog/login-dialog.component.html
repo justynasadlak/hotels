@@ -1,14 +1,21 @@
 <div class="login__wrapper">
-    <form class="example-form" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
         <mat-form-field>
           <input matInput type="text" placeholder="Login" formControlName="login">
         </mat-form-field>
         <mat-form-field>
           <input matInput type="password" placeholder="Password" formControlName="password">
         </mat-form-field>
-        <button mat-flat-button color="primary" type="submit" >
-          SIGN IN
+      <mat-form-field *ngIf="register">
+        <input matInput type="password" placeholder="Repeat password" formControlName="repeatPassword">
+      </mat-form-field>
+        <button mat-flat-button color="primary" type="submit">
+          {{ getButtonName() }}
         </button>
-        <button mat-button mat-dialog-close>Cancel</button>
+        <button mat-button type="button" mat-dialog-close>Cancel</button>
     </form>
+  <div *ngIf="!register">
+    <p>You don't have an account yet?</p>
+    <button mat-button (click)="onRegister()">Register</button>
+  </div>
 </div>
