@@ -1,21 +1,28 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {MatDialog} from '@angular/material';
 import {LoginDialogComponent} from '../../../user/login-dialog/login-dialog.component';
+import {Observable} from 'rxjs';
+import {UserService} from '../../../../services/user.service';
 
 @Component({
   selector: 'app-toolbar',
   templateUrl: './toolbar.component.html',
   styleUrls: ['./toolbar.component.scss']
 })
-export class ToolbarComponent implements OnInit {
+export class ToolbarComponent implements OnInit, OnDestroy {
 
-  isLogged: boolean;
-  constructor(public dialog: MatDialog) {
+  isLogged$: Observable<boolean>;
+  user: string;
+
+  constructor(public dialog: MatDialog, private userService: UserService) {
 
   }
 
   ngOnInit() {
-    this.isLogged = !!localStorage.getItem('token');
+    this.isLogged$ = this.userService.isLogged;
+  }
+
+  ngOnDestroy(): void {
   }
 
   onLogin() {
@@ -27,6 +34,6 @@ export class ToolbarComponent implements OnInit {
   }
 
   onLogout() {
-    localStorage.removeItem('token');
+    this.userService.logout();
   }
 }
