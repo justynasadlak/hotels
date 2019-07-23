@@ -3,9 +3,13 @@
   <mat-card>
     <mat-card-content>
       <mat-form-field>
-        <input matInput placeholder="City" formControlName="city"/>
-      </mat-form-field>
-      <mat-form-field>
+        <input type="text" placeholder="City" aria-label="Number" matInput [formControl]="cities" [matAutocomplete]="auto">
+        <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+          <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+            {{option}}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>      <mat-form-field>
         <input matInput placeholder="Hotel name" formControlName="hotel"/>
       </mat-form-field>
       <mat-form-field>
