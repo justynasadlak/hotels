@@ -2,8 +2,10 @@
   <mat-toolbar-row>
     <span>Hotels</span>
     <span class="example-spacer"></span>
-    <button mat-raised-button color="accent" class="example-icon" (click)="onLogin()" *ngIf="!isLogged">Login</button>
-    <button mat-raised-button color="accent" class="example-icon" (click)="onLogout()" *ngIf="isLogged">Logout</button>
+    <button mat-raised-button color="accent" class="example-icon" (click)="onLogin()" *ngIf="!(isLogged$ | async); else isLogged">Login</button>
+    <ng-template #isLogged>
+      <button mat-raised-button color="accent" class="example-icon" (click)="onLogout()">Logout</button>
+    </ng-template>
     <button class="example-icon" mat-button [matMenuTriggerFor]="menu">Language</button>
     <mat-menu #menu="matMenu">
       <button mat-menu-item>PL</button>

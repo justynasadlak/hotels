@@ -50,6 +50,7 @@ export class LoginDialogComponent implements OnInit {
     this.userService.getUserToken(user).subscribe(data => {
       localStorage.setItem('token', data.id_token);
       console.log(data);
+      this.userService.login();
       this.dialogRef.close();
     }, (error) => {
       console.log('Http Call is failed from component');
