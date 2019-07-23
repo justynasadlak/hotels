@@ -3,6 +3,7 @@ import {MatDialog} from '@angular/material';
 import {LoginDialogComponent} from '../../../user/login-dialog/login-dialog.component';
 import {Observable} from 'rxjs';
 import {UserService} from '../../../../services/user.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-toolbar',
@@ -14,7 +15,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
   isLogged$: Observable<boolean>;
   user: string;
 
-  constructor(public dialog: MatDialog, private userService: UserService) {
+  constructor(public dialog: MatDialog, private userService: UserService, private router: Router) {
 
   }
 
@@ -35,5 +36,10 @@ export class ToolbarComponent implements OnInit, OnDestroy {
 
   onLogout() {
     this.userService.logout();
+    this.router.navigate(['']);
+  }
+
+  onProfile() {
+    this.router.navigate(['my-profile']);
   }
 }
