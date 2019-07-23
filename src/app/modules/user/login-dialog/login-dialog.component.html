@@ -3,12 +3,16 @@
         <mat-form-field>
           <input matInput type="text" placeholder="Login" formControlName="login">
         </mat-form-field>
+      <mat-form-field *ngIf="register">
+        <input matInput type="email" placeholder="Email" formControlName="email">
+      </mat-form-field>
         <mat-form-field>
           <input matInput type="password" placeholder="Password" formControlName="password">
         </mat-form-field>
       <mat-form-field *ngIf="register">
         <input matInput type="password" placeholder="Repeat password" formControlName="repeatPassword">
       </mat-form-field>
+      <mat-checkbox formControlName="rememberMe">Remember me</mat-checkbox>
         <button mat-flat-button color="primary" type="submit">
           {{ getButtonName() }}
         </button>
