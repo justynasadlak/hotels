@@ -7,9 +7,15 @@ import {LoginDialogComponent} from '../../../user/login-dialog/login-dialog.comp
   templateUrl: './toolbar.component.html',
   styleUrls: ['./toolbar.component.scss']
 })
-export class ToolbarComponent {
+export class ToolbarComponent implements OnInit {
 
+  isLogged: boolean;
   constructor(public dialog: MatDialog) {
+
+  }
+
+  ngOnInit() {
+    this.isLogged = !!localStorage.getItem('token');
   }
 
   onLogin() {
@@ -18,5 +24,9 @@ export class ToolbarComponent {
       width: '250px',
       maxHeight: '350px'
     });
+  }
+
+  onLogout() {
+    localStorage.removeItem('token');
   }
 }

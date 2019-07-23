@@ -6,7 +6,14 @@ import {
   MatToolbarModule,
   MatSelectModule,
   MatOptionModule,
-  MatInputModule, MatCardModule, MatCheckboxModule, MatProgressSpinnerModule, MatDialogModule, MatMenuModule
+  MatInputModule,
+  MatCardModule,
+  MatCheckboxModule,
+  MatProgressSpinnerModule,
+  MatDialogModule,
+  MatMenuModule,
+  MatDatepickerModule,
+  MatNativeDateModule
 } from '@angular/material';
 
 @NgModule({
@@ -25,7 +32,9 @@ import {
     MatCheckboxModule,
     MatProgressSpinnerModule,
     MatDialogModule,
-    MatMenuModule
+    MatMenuModule,
+    MatDatepickerModule,
+    MatNativeDateModule
   ]
 })
 export class CustomMaterialModule { }
