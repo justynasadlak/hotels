@@ -8,22 +8,35 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {SharedModule} from './modules/shared/shared.module';
 import {LoginDialogComponent} from './modules/user/login-dialog/login-dialog.component';
 import {ReactiveFormsModule} from '@angular/forms';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
+import {HttpRequestInterceptor} from './modules/core/interceptors/http-request.interceptor';
+import { UserProfileComponent } from './modules/user/user-profile/user-profile.component';
+import { BookingComponent } from './modules/booking/booking/booking.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LandingPageComponent,
-    LoginDialogComponent
+    LoginDialogComponent,
+    UserProfileComponent,
+    BookingComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
-    SharedModule
+    SharedModule,
+    HttpClientModule
   ],
   entryComponents: [LoginDialogComponent],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: HttpRequestInterceptor,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {
