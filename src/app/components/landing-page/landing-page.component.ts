@@ -6,6 +6,7 @@ import {Router} from '@angular/router';
 import {from, Observable} from 'rxjs';
 import {distinct, filter, map, startWith, tap, toArray} from 'rxjs/operators';
 import {Room} from '../../resources/models/room';
+import {Store} from '../../../store';
 
 @Component({
   selector: 'app-landing-page',
@@ -13,6 +14,8 @@ import {Room} from '../../resources/models/room';
   styleUrls: ['./landing-page.component.scss']
 })
 export class LandingPageComponent implements OnInit {
+  hotels$: Observable<Hotel[]>;
+
   searchForm: FormGroup;
   hotels: Hotel[];
   searchedHotels: Hotel[];
@@ -24,10 +27,12 @@ export class LandingPageComponent implements OnInit {
 
   rooms: Room[];
 
-  constructor(private bookingService: BookingService, private formBuilder: FormBuilder, private router: Router) {
+  constructor(private bookingService: BookingService, private formBuilder: FormBuilder, private router: Router, private store: Store) {
   }
 
   ngOnInit() {
+  this.bookingService.getAllHotels().subscribe();
+  this.hotels$ = this.store.select<Hotel[]>('hotels');
 
     this.getHotels();
     this.getRooms();
@@ -50,7 +55,8 @@ export class LandingPageComponent implements OnInit {
   }
 
   getHotels() {
-    this.bookingService.getAllHotels().subscribe(data => {
+    // this.bookingService.getAllHotels().subscribe(data => {
+    this.hotels$.subscribe(data => {
       this.hotels = data;
 
       console.log(this.hotels);
