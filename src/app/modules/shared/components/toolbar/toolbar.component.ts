@@ -4,6 +4,7 @@ import {LoginDialogComponent} from '../../../user/login-dialog/login-dialog.comp
 import {Observable} from 'rxjs';
 import {UserService} from '../../../../services/user.service';
 import {Router} from '@angular/router';
+import {Store} from '../../../../../store';
 
 @Component({
   selector: 'app-toolbar',
@@ -15,12 +16,14 @@ export class ToolbarComponent implements OnInit, OnDestroy {
   isLogged$: Observable<boolean>;
   user: string;
 
-  constructor(public dialog: MatDialog, private userService: UserService, private router: Router) {
+  constructor(public dialog: MatDialog, private userService: UserService, private router: Router, private store: Store) {
 
   }
 
   ngOnInit() {
-    this.isLogged$ = this.userService.isLogged;
+    this.userService.isAuthenticated().subscribe();
+    this.isLogged$ = this.store.select<boolean>('isLogged');
+
   }
 
   ngOnDestroy(): void {
