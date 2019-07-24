@@ -1,7 +1,9 @@
+import {Room} from './room';
+
 export interface Hotel {
-  facalities: [];
-  id: number;
-  location: string;
-  name: string;
-  rooms: [];
+  id?: number;
+  name?: string;
+  location?: string;
+  facalities?: [];
+  rooms?: Room[];
 }
