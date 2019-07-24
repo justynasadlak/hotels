@@ -4,7 +4,7 @@ import {Hotel} from '../../resources/models/hotel';
 import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
 import {Router} from '@angular/router';
 import {from, Observable} from 'rxjs';
-import {distinct, map, startWith, toArray} from 'rxjs/operators';
+import {distinct, filter, map, startWith, tap, toArray} from 'rxjs/operators';
 
 @Component({
   selector: 'app-landing-page',
@@ -14,6 +14,8 @@ import {distinct, map, startWith, toArray} from 'rxjs/operators';
 export class LandingPageComponent implements OnInit {
   searchForm: FormGroup;
   hotels: Hotel[];
+  searchedHotels: Hotel[];
+  hotelsToShow: Hotel[];
 
   cities = new FormControl();
   options: string[];
@@ -41,7 +43,7 @@ export class LandingPageComponent implements OnInit {
     });
 
     this.searchForm = this.formBuilder.group({
-      // city: [''],
+      cities: [''],
       hotel: [''],
       checkIn: [''],
       duration: ['']
@@ -50,11 +52,26 @@ export class LandingPageComponent implements OnInit {
 
   onSubmit() {
     console.log(this.searchForm.value);
-    this.router.navigate(['booking']);
+    this.hotelsToShow = this.searchedHotels;
+  }
+
+  getHotelsFromSelectCity(city: string) {
+    console.log(city);
+    from(this.hotels)
+      .pipe(
+        filter(hotels => hotels.location.includes(city)
+        ),
+        toArray()
+      )
+      .subscribe(val => {
+        this.searchedHotels = val;
+        console.log(this.searchedHotels);
+      });
   }
 
   filterOptions() {
     this.filteredOptions = this.cities.valueChanges.pipe(
+      tap(x => this.getHotelsFromSelectCity(x)),
       startWith(''),
       map(value => this._filter(value))
     );
@@ -62,9 +79,6 @@ export class LandingPageComponent implements OnInit {
 
   private _filter(value: string): string[] {
     const filterValue = value.toLowerCase();
-    console.log('tutaj');
-    console.log(this.options);
-    // return this.options;
     return this.options.filter(option => option.toLowerCase().indexOf(filterValue) === 0);
   }
 }

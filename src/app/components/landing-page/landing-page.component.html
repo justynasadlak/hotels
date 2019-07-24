@@ -31,4 +31,10 @@
 
   </mat-card>
   </form>
+
+  <div *ngFor="let hotel of hotelsToShow">
+    <mat-card>
+      {{ hotel.name }}
+    </mat-card>
+  </div>
 </div>
