@@ -5,6 +5,7 @@ import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
 import {Router} from '@angular/router';
 import {from, Observable} from 'rxjs';
 import {distinct, filter, map, startWith, tap, toArray} from 'rxjs/operators';
+import {Room} from '../../resources/models/room';
 
 @Component({
   selector: 'app-landing-page',
@@ -21,10 +22,34 @@ export class LandingPageComponent implements OnInit {
   options: string[];
   filteredOptions: Observable<string[]>;
 
+  rooms: Room[];
+
   constructor(private bookingService: BookingService, private formBuilder: FormBuilder, private router: Router) {
   }
 
   ngOnInit() {
+
+    this.getHotels();
+    this.getRooms();
+    this.searchForm = this.formBuilder.group({
+      cities: [''],
+      hotel: [''],
+      guests: [''],
+      checkIn: [''],
+      duration: ['']
+    });
+  }
+
+  onSubmit() {
+    // console.log(this.searchForm.value);
+    this.hotelsToShow = this.searchedHotels;
+  }
+
+  getRooms() {
+    this.bookingService.getAllRooms().subscribe(rooms => this.rooms = rooms);
+  }
+
+  getHotels() {
     this.bookingService.getAllHotels().subscribe(data => {
       this.hotels = data;
 
@@ -41,18 +66,6 @@ export class LandingPageComponent implements OnInit {
           this.filterOptions();
         });
     });
-
-    this.searchForm = this.formBuilder.group({
-      cities: [''],
-      hotel: [''],
-      checkIn: [''],
-      duration: ['']
-    });
-  }
-
-  onSubmit() {
-    console.log(this.searchForm.value);
-    this.hotelsToShow = this.searchedHotels;
   }
 
   getHotelsFromSelectCity(city: string) {
