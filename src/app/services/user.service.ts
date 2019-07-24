@@ -4,19 +4,20 @@ import {BehaviorSubject, Observable} from 'rxjs';
 import {Token} from '../resources/models/token';
 import {User} from '../resources/models/user';
 import {UserData} from '../resources/models/userData';
-import {tap} from 'rxjs/operators';
+import {delay, tap} from 'rxjs/operators';
+import {Store} from '../../store';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
 
-  public isLogged: BehaviorSubject<boolean> = new BehaviorSubject(false);
+  // public isLogged: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
-  constructor(private http: HttpClient) {
-    this.isAuthenticated().subscribe(login =>
-      this.isLogged.next(!!login)
-    );
+  constructor(private http: HttpClient, private store: Store) {
+    // this.isAuthenticated().subscribe(login =>
+    //   this.isLogged.next(!!login)
+    // );
   }
 
   getUserToken(user: User): Observable<Token> {
@@ -28,7 +29,8 @@ export class UserService {
   }
 
   isAuthenticated(): Observable<string> {
-    return this.http.get('http://185.157.80.88:8080/api/authenticate', {responseType: 'text'}).pipe(tap(x => console.log(x)));
+    return this.http.get('http://185.157.80.88:8080/api/authenticate', {responseType: 'text'})
+      .pipe(delay(500), tap(response => this.store.set('isLogged', !!response)));
   }
 
   register(userData: UserData) {
@@ -37,11 +39,11 @@ export class UserService {
   }
 
   login() {
-    this.isLogged.next(true);
+    this.store.set('isLogged', true);
   }
 
   logout() {
     localStorage.removeItem('token');
-    this.isLogged.next(false);
+    this.store.set('isLogged', false);
   }
 }
