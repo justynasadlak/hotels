@@ -10,8 +10,9 @@ import {LoginDialogComponent} from './modules/user/login-dialog/login-dialog.com
 import {ReactiveFormsModule} from '@angular/forms';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {HttpRequestInterceptor} from './modules/core/interceptors/http-request.interceptor';
-import { UserProfileComponent } from './modules/user/user-profile/user-profile.component';
-import { BookingComponent } from './modules/booking/booking/booking.component';
+import {UserProfileComponent} from './modules/user/user-profile/user-profile.component';
+import {BookingComponent} from './modules/booking/booking/booking.component';
+import {Store} from '../store';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { BookingComponent } from './modules/booking/booking/booking.component';
   ],
   entryComponents: [LoginDialogComponent],
   providers: [
+    Store,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: HttpRequestInterceptor,
