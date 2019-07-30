@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {FormControl} from '@angular/forms';
+import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
 
 @Component({
   selector: 'app-search-box',
@@ -8,22 +8,52 @@ import {FormControl} from '@angular/forms';
 })
 export class SearchBoxComponent implements OnInit {
 
-  @Input()
-  filteredOptions: string[];
-
   @Output()
-  search = new EventEmitter();
+  search: EventEmitter<string> = new EventEmitter<string>();
 
+  searchForm: FormGroup;
   cities = new FormControl();
 
-  constructor() {
+  private filteredLocations: string[];
+  private allLocations: string[];
+
+  @Input() set locations(locations: string[]) {
+    if (locations) {
+      this.allLocations = locations;
+
+      if (this.cities.value) {
+        this.filteredLocations = this._filter(locations, this.cities.value);
+        console.log(this.filteredLocations);
+      }
+    }
+  }
+
+  constructor(private formBuilder: FormBuilder) {
+    this.searchForm = this.formBuilder.group({
+      cities: [''],
+      hotel: [''],
+      guests: [''],
+      checkIn: [''],
+      duration: ['']
+    }
+    );
   }
 
   ngOnInit() {
+    this.cities.valueChanges.subscribe(
+      value => {
+        this.filteredLocations = this._filter(this.allLocations, value);
+      }
+    );
   }
 
   onSearch(): void {
-    this.search.emit();
+    this.search.emit(this.cities.value);
+
   }
 
+  private _filter(locations: string[], value: string): string[] {
+    const filterValue = value.toLowerCase();
+    return locations.filter(option => option.toLowerCase().includes(filterValue));
+  }
 }

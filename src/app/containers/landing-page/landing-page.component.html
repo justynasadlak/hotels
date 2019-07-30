@@ -1,0 +1,22 @@
+<div class="landing__wrapper">
+  <app-search-box [locations]="locations$ | async" (search)="onSearch($event)"></app-search-box>
+
+  <app-search-hotels-list
+    [hotels]="filterHotels$ | async"
+    [rooms]="filterRooms$ | async">
+  </app-search-hotels-list>
+
+
+  <!--<div *ngFor="let room of rooms$ | async">-->
+    <!--<mat-card>-->
+      <!--<mat-card-header>-->
+        <!--<mat-card-title>{{ room.hotel.name}}</mat-card-title>-->
+        <!--<mat-card-subtitle>{{ room.hotel.location}}</mat-card-subtitle>-->
+      <!--</mat-card-header>-->
+      <!--<mat-card-content>-->
+        <!--<p>Number: {{ room.number }}</p>-->
+        <!--<p>Capacity: {{ room.capacity }}</p>-->
+      <!--</mat-card-content>-->
+    <!--</mat-card>-->
+  <!--</div>-->
+</div>

@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import {LandingPageComponent} from './components/landing-page/landing-page.component';
+import {LandingPageComponent} from './containers/landing-page/landing-page.component';
 import {UserProfileComponent} from './modules/user/user-profile/user-profile.component';
 import {AuthGuardService as AuthGuard} from './auth/auth-guard.service';
 import {BookingComponent} from './modules/booking/booking/booking.component';
