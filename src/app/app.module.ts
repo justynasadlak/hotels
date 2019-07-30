@@ -11,7 +11,6 @@ import {ReactiveFormsModule} from '@angular/forms';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {HttpRequestInterceptor} from './modules/core/interceptors/http-request.interceptor';
 import {UserProfileComponent} from './modules/user/user-profile/user-profile.component';
-import {BookingComponent} from './modules/booking/booking/booking.component';
 import {Store} from '../store';
 import { SearchHotelsListComponent } from './components/search-hotels-list/search-hotels-list.component';
 import { SearchBoxComponent } from './components/search-box/search-box.component';
@@ -22,7 +21,6 @@ import { SearchBoxComponent } from './components/search-box/search-box.component
     LandingPageComponent,
     LoginDialogComponent,
     UserProfileComponent,
-    BookingComponent,
     SearchHotelsListComponent,
     SearchBoxComponent
   ],
