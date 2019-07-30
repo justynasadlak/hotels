@@ -30,7 +30,7 @@ export class UserService {
 
   isAuthenticated(): Observable<string> {
     return this.http.get('http://185.157.80.88:8080/api/authenticate', {responseType: 'text'})
-      .pipe(delay(500), tap(response => this.store.set('isLogged', !!response)));
+      .pipe(delay(1000), tap(response => this.store.set('isLogged', !!response)));
   }
 
   register(userData: UserData) {

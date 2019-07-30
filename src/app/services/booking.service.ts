@@ -22,6 +22,6 @@ export class BookingService {
   }
 
   getAllRooms(): Observable<Room[]> {
-    return this.http.get<Room[]>(this.url + '/rooms');
+    return this.http.get<Room[]>(this.url + '/rooms').pipe(delay(2000), tap(response => this.store.set('rooms', response)));
   }
 }

@@ -1,15 +1,18 @@
 import {BehaviorSubject, Observable} from 'rxjs';
 import {distinctUntilChanged, pluck} from 'rxjs/operators';
 import {Hotel} from './app/resources/models/hotel';
+import {Room} from './app/resources/models/room';
 
 interface InitialState {
   isLogged: boolean;
   hotels: Hotel[];
+  rooms: Room[];
 }
 
 const initialState: InitialState = {
   isLogged: false,
-  hotels: []
+  hotels: [],
+  rooms: []
 };
 
 export class Store {
