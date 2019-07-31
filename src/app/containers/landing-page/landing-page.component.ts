@@ -14,8 +14,8 @@ import {Store} from '../../../store';
   styleUrls: ['./landing-page.component.scss']
 })
 export class LandingPageComponent implements OnInit {
-  hotels: Hotel[];
-  rooms: Room[];
+  private hotels: Hotel[];
+  private rooms: Room[];
   private location: string;
   private hotels$: Observable<Hotel[]>;
   private locations$: Observable<string[]>;
@@ -26,13 +26,8 @@ export class LandingPageComponent implements OnInit {
   constructor(private bookingService: BookingService, private formBuilder: FormBuilder, private router: Router, private store: Store) {
   }
 
-  ngOnInit() {
-    this.bookingService.getAllHotels().subscribe(hotel => {
-      this.getRooms();
-      this.hotels$ = this.store.select<Hotel[]>('hotels');
-      this.locations$ = this.getLocations();
-    });
-
+  ngOnInit(): void {
+    this.getHotels();
   }
 
   onSearch(loc: string): void {
@@ -41,7 +36,15 @@ export class LandingPageComponent implements OnInit {
     this.filterRooms$ = this.rooms$.pipe(map(rooms => rooms.filter(room => room.hotel.location === this.location)));
   }
 
-  getRooms() {
+  private getHotels(): void {
+    this.bookingService.getAllHotels().subscribe(hotel => {
+      this.getRooms();
+      this.hotels$ = this.store.select<Hotel[]>('hotels');
+      this.locations$ = this.getLocations();
+    });
+  }
+
+  private getRooms(): void {
     this.bookingService.getAllRooms().subscribe(rooms => this.rooms$ = this.store.select<Room[]>('rooms'));
   }
 

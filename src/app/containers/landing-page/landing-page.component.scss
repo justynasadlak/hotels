@@ -3,15 +3,8 @@
   width: 100vw;
   position: relative;
 }
-.mat-card-content {
-  display: flex;
-  flex-direction: column;
-}
-.mat-card {
+
+app-search-box {
   max-width: 400px;
   margin: 1px;
-  //position: absolute;
-  //top: 50%;
-  //left: 50%;
-  //transform: translate(-50%, -50%);
 }

@@ -8,14 +8,16 @@ import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
 })
 export class SearchBoxComponent implements OnInit {
 
+  private cities = new FormControl();
+  private filteredLocations: string[];
+  private allLocations: string[];
+  searchForm: FormGroup
+
   @Output()
   search: EventEmitter<string> = new EventEmitter<string>();
 
-  searchForm: FormGroup;
-  cities = new FormControl();
-
-  private filteredLocations: string[];
-  private allLocations: string[];
+  constructor(private formBuilder: FormBuilder) {
+  }
 
   @Input() set locations(locations: string[]) {
     if (locations) {
@@ -28,28 +30,29 @@ export class SearchBoxComponent implements OnInit {
     }
   }
 
-  constructor(private formBuilder: FormBuilder) {
+  ngOnInit(): void {
     this.searchForm = this.formBuilder.group({
-      cities: [''],
-      hotel: [''],
-      guests: [''],
-      checkIn: [''],
-      duration: ['']
-    }
-    );
-  }
-
-  ngOnInit() {
-    this.cities.valueChanges.subscribe(
-      value => {
-        this.filteredLocations = this._filter(this.allLocations, value);
+        cities: [''],
+        hotel: [''],
+        guests: [''],
+        checkIn: [''],
+        duration: ['']
       }
     );
+    this.setFilteredLocations();
   }
 
   onSearch(): void {
     this.search.emit(this.cities.value);
 
+  }
+
+  private setFilteredLocations(): void {
+    this.cities.valueChanges.subscribe(
+      value => {
+        this.filteredLocations = this._filter(this.allLocations, value);
+      }
+    );
   }
 
   private _filter(locations: string[], value: string): string[] {

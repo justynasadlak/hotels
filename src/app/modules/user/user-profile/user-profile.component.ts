@@ -9,12 +9,12 @@ import {UserData} from '../../../resources/models/userData';
 })
 export class UserProfileComponent implements OnInit {
 
-  userData: UserData;
+  private userData: UserData;
 
   constructor(private userService: UserService) {
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.userService.isAuthenticated().subscribe(
       login => this.userService.getUserData(login)
         .subscribe(data => this.userData = data));

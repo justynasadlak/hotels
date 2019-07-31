@@ -7,18 +7,12 @@ import {Room} from '../../resources/models/room';
   templateUrl: './search-hotels-list.component.html',
   styleUrls: ['./search-hotels-list.component.scss']
 })
-export class SearchHotelsListComponent implements OnInit {
+export class SearchHotelsListComponent {
 
   @Input()
   hotels: Hotel[];
 
   @Input()
   rooms: Room[];
-
-  constructor() {
-  }
-
-  ngOnInit() {
-  }
 
 }

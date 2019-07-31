@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {BehaviorSubject, Observable} from 'rxjs';
+import {Observable} from 'rxjs';
 import {Token} from '../resources/models/token';
 import {User} from '../resources/models/user';
 import {UserData} from '../resources/models/userData';
@@ -12,12 +12,8 @@ import {Store} from '../../store';
 })
 export class UserService {
 
-  // public isLogged: BehaviorSubject<boolean> = new BehaviorSubject(false);
-
   constructor(private http: HttpClient, private store: Store) {
-    // this.isAuthenticated().subscribe(login =>
-    //   this.isLogged.next(!!login)
-    // );
+
   }
 
   getUserToken(user: User): Observable<Token> {
@@ -33,9 +29,8 @@ export class UserService {
       .pipe(delay(1000), tap(response => this.store.set('isLogged', !!response)));
   }
 
-  register(userData: UserData) {
-    console.log(userData);
-    return this.http.post('http://185.157.80.88:8080/api/register', userData);
+  register(userData: UserData): Observable<UserData> {
+    return this.http.post<UserData>('http://185.157.80.88:8080/api/register', userData);
   }
 
   login() {

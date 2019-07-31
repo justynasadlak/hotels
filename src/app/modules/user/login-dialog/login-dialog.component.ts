@@ -11,8 +11,9 @@ import {UserData} from '../../../resources/models/userData';
   styleUrls: ['./login-dialog.component.scss']
 })
 export class LoginDialogComponent implements OnInit {
+
+  private register = false;
   loginForm: FormGroup;
-  register = false;
 
   constructor(private formBuilder: FormBuilder, private userService: UserService, private dialogRef: MatDialogRef<LoginDialogComponent>) {
   }
@@ -27,20 +28,20 @@ export class LoginDialogComponent implements OnInit {
     });
   }
 
-  onSubmit() {
+  onSubmit(): void {
     !this.register ? this.login() : this.signUp();
   }
 
-  onRegister() {
+  onRegister(): void {
     this.register = true;
     console.log('do rejestracji');
   }
 
-  getButtonName() {
+  getButtonName(): string {
     return this.register ? 'SIGN UP' : 'SIGN IN';
   }
 
-  login() {
+  login(): void {
     const user: User = {
       'password': this.loginForm.value.password,
       'rememberMe': this.loginForm.value.rememberMe,
@@ -49,7 +50,6 @@ export class LoginDialogComponent implements OnInit {
 
     this.userService.getUserToken(user).subscribe(data => {
       localStorage.setItem('token', data.id_token);
-      console.log(data);
       this.userService.login();
       this.dialogRef.close();
     }, (error) => {
@@ -57,7 +57,7 @@ export class LoginDialogComponent implements OnInit {
     });
   }
 
-  signUp() {
+  signUp(): void {
     const userData: UserData = {
       'login': this.loginForm.value.login,
       'email': this.loginForm.value.email,
