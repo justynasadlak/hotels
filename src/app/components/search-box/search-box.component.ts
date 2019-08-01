@@ -8,7 +8,6 @@ import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
 })
 export class SearchBoxComponent implements OnInit {
 
-  private cities = new FormControl();
   private filteredLocations: string[];
   private allLocations: string[];
   searchForm: FormGroup
@@ -23,32 +22,31 @@ export class SearchBoxComponent implements OnInit {
     if (locations) {
       this.allLocations = locations;
 
-      if (this.cities.value) {
-        this.filteredLocations = this._filter(locations, this.cities.value);
-        console.log(this.filteredLocations);
+      if (this.searchForm.controls.city.value) {
+        this.filteredLocations = this._filter(locations, this.searchForm.controls.city.value);
       }
     }
   }
 
   ngOnInit(): void {
     this.searchForm = this.formBuilder.group({
-        cities: [''],
-        hotel: [''],
+        city: [''],
+        // hotel: [''],
         guests: [''],
         checkIn: [''],
-        duration: ['']
+        // duration: ['']
       }
     );
     this.setFilteredLocations();
   }
 
   onSearch(): void {
-    this.search.emit(this.cities.value);
+    this.search.emit(this.searchForm.value);
 
   }
 
   private setFilteredLocations(): void {
-    this.cities.valueChanges.subscribe(
+    this.searchForm.controls.city.valueChanges.subscribe(
       value => {
         this.filteredLocations = this._filter(this.allLocations, value);
       }
