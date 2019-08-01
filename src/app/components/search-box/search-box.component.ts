@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
+import {FormBuilder, FormGroup} from '@angular/forms';
 
 @Component({
   selector: 'app-search-box',
@@ -8,12 +8,11 @@ import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
 })
 export class SearchBoxComponent implements OnInit {
 
-  private filteredLocations: string[];
-  private allLocations: string[];
-  searchForm: FormGroup
-
+  searchForm: FormGroup;
   @Output()
   search: EventEmitter<string> = new EventEmitter<string>();
+  private filteredLocations: string[];
+  private allLocations: string[];
 
   constructor(private formBuilder: FormBuilder) {
   }
@@ -31,10 +30,9 @@ export class SearchBoxComponent implements OnInit {
   ngOnInit(): void {
     this.searchForm = this.formBuilder.group({
         city: [''],
-        // hotel: [''],
         guests: [''],
         checkIn: [''],
-        // duration: ['']
+        checkOut: ['']
       }
     );
     this.setFilteredLocations();
