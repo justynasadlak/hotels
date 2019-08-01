@@ -3,7 +3,10 @@
 
   <app-search-hotels-list
     [hotels]="filterHotels$ | async"
-    [rooms]="filterRooms$ | async">
+    [rooms]="filterRooms$ | async"
+    [facilities]="filterFacilities$ | async"
+    (book)="onBook($event)"
+  >
   </app-search-hotels-list>
   
 </div>
