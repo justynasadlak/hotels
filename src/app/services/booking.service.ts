@@ -5,6 +5,8 @@ import {Hotel} from '../resources/models/hotel';
 import {Room} from '../resources/models/room';
 import {delay, tap} from 'rxjs/operators';
 import {Store} from '../../store';
+import {Facility} from '../resources/models/facility';
+import {Booking} from '../resources/models/booking';
 
 @Injectable({
   providedIn: 'root'
@@ -24,4 +26,22 @@ export class BookingService {
   getAllRooms(): Observable<Room[]> {
     return this.http.get<Room[]>(this.url + '/rooms').pipe(delay(2000), tap(response => this.store.set('rooms', response)));
   }
+
+  getRoom(roomId: string): Observable<Room> {
+    return this.http.get<Room>(this.url + `/rooms/${roomId}`);
+  }
+
+  getAllFacilities(): Observable<Facility[]> {
+    return this.http.get<Facility[]>(this.url + '/facilities').pipe(delay(2000), tap(response => this.store.set('facilities', response)));
+  }
+
+  getAllBookings(): Observable<Booking[]> {
+    return this.http.get<Booking[]>(this.url + '/bookings');
+  }
+
+  addBooking(booking: Booking): Observable<Booking> {
+    return this.http.post<Booking>(this.url + '/bookings', booking);
+  }
+
+
 }
