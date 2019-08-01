@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {FormBuilder, FormGroup} from '@angular/forms';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 
 @Component({
   selector: 'app-search-box',
@@ -29,18 +29,22 @@ export class SearchBoxComponent implements OnInit {
 
   ngOnInit(): void {
     this.searchForm = this.formBuilder.group({
-        city: [''],
-        guests: [''],
-        checkIn: [''],
-        checkOut: ['']
+        city: ['', Validators.required],
+        guests: ['', Validators.required],
+        checkIn: ['', Validators.required],
+        checkOut: ['', Validators.required]
       }
     );
     this.setFilteredLocations();
   }
 
   onSearch(): void {
-    this.search.emit(this.searchForm.value);
+    this.isStartDateBeforeEndDate(this.searchForm) ? this.search.emit(this.searchForm.value) : alert('Check-in should be earlier than check-out!');
 
+  }
+
+  private isStartDateBeforeEndDate(searchForm: FormGroup) {
+    return searchForm.controls.checkIn.value < searchForm.controls.checkOut.value;
   }
 
   private setFilteredLocations(): void {
