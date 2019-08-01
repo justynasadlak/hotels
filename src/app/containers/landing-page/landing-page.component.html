@@ -1,0 +1,9 @@
+<div class="landing__wrapper">
+  <app-search-box [locations]="locations$ | async" (search)="onSearch($event)"></app-search-box>
+
+  <app-search-hotels-list
+    [hotels]="filterHotels$ | async"
+    [rooms]="filterRooms$ | async">
+  </app-search-hotels-list>
+  
+</div>
