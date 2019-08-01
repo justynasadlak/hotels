@@ -29,10 +29,10 @@ export class LandingPageComponent implements OnInit {
   private hotels$: Observable<Hotel[]>;
   private locations$: Observable<string[]>;
   private rooms$: Observable<Room[]>;
+  private bookings$: Observable<Booking[]>;
 
   // TODO
   // private facilities$: Observable<Facility[]>;
-  // private bookings$: Observable<Booking[]>;
 
   private filterRooms$: Observable<Room[]>;
   private filterHotels$: Observable<Hotel[]>;
@@ -132,7 +132,21 @@ export class LandingPageComponent implements OnInit {
     );
   }
 
+  private getBookings(): Observable<Booking[]> {
+
+    return this.bookingService.getAllBookings();
+  }
+
   private filterRoomsBySearchValues(searchValues: SearchData): Observable<Room[]> {
+    const checkIn = new Date(searchValues.checkIn).toISOString();
+    const checkOut = new Date(searchValues.checkOut).toISOString();
+
+    this.getBookings().pipe(
+      map(bookings => bookings
+        .filter(
+          b => (b.startDate > checkIn && b.startDate > checkOut)
+            || (b.endDate < checkIn && b.endDate < checkOut))))
+      .subscribe(console.log);
 
     return this.filterRooms$ = this.rooms$.pipe(
       map(rooms => rooms.filter(room => room.hotel.location === this.location)),
