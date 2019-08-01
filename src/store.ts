@@ -6,6 +6,7 @@ import {Facility} from './app/resources/models/facility';
 import {Booking} from './app/resources/models/booking';
 
 interface InitialState {
+  username: string;
   isLogged: boolean;
   hotels: Hotel[];
   rooms: Room[];
@@ -16,6 +17,7 @@ interface InitialState {
 }
 
 const initialState: InitialState = {
+  username: null,
   isLogged: false,
   hotels: [],
   rooms: [],
