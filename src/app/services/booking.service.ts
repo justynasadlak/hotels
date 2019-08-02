@@ -36,7 +36,7 @@ export class BookingService {
   }
 
   getAllBookings(): Observable<Booking[]> {
-    return this.http.get<Booking[]>(this.url + '/bookings');
+    return this.http.get<Booking[]>(this.url + '/bookings').pipe(delay(2000), tap(response => this.store.set('bookings', response)));
   }
 
   addBooking(booking: Booking): Observable<Booking> {

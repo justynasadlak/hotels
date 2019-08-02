@@ -3,7 +3,7 @@ import {BookingService} from '../../services/booking.service';
 import {Hotel} from '../../resources/models/hotel';
 import {FormBuilder} from '@angular/forms';
 import {Router} from '@angular/router';
-import {Observable} from 'rxjs';
+import {combineLatest, Observable} from 'rxjs';
 import {map, tap} from 'rxjs/operators';
 import {Room} from '../../resources/models/room';
 import {Store} from '../../../store';
@@ -25,11 +25,13 @@ export class LandingPageComponent implements OnInit {
   private startDate;
   private endDate;
   private username;
+  private bookedRoomsId = [];
 
   private hotels$: Observable<Hotel[]>;
   private locations$: Observable<string[]>;
   private rooms$: Observable<Room[]>;
   private bookings$: Observable<Booking[]>;
+  private bookingsOnThisDate$: Observable<Booking[]>;
 
   // TODO
   // private facilities$: Observable<Facility[]>;
@@ -47,6 +49,8 @@ export class LandingPageComponent implements OnInit {
 
   ngOnInit(): void {
     this.getHotels();
+    this.getBookings();
+
   }
 
   onSearch(searchValues: SearchData): void {
@@ -132,25 +136,38 @@ export class LandingPageComponent implements OnInit {
     );
   }
 
-  private getBookings(): Observable<Booking[]> {
-
-    return this.bookingService.getAllBookings();
+  private getBookings(): void {
+    this.bookingService.getAllBookings().subscribe(bookings => this.bookings$ = this.store.select('bookings'));
   }
 
   private filterRoomsBySearchValues(searchValues: SearchData): Observable<Room[]> {
     const checkIn = new Date(searchValues.checkIn).toISOString();
     const checkOut = new Date(searchValues.checkOut).toISOString();
 
-    this.getBookings().pipe(
+    this.bookingsOnThisDate$ = this.bookings$.pipe(
       map(bookings => bookings
         .filter(
-          b => (b.startDate > checkIn && b.startDate > checkOut)
-            || (b.endDate < checkIn && b.endDate < checkOut))))
-      .subscribe(console.log);
+          b => (checkIn >= b.startDate && checkIn < b.endDate)
+            || (checkOut >= b.startDate && checkOut < b.endDate)
+            || (checkIn <= b.startDate && checkOut > b.endDate)
+        )
+      ),
+      tap(console.log)
+    );
 
-    return this.filterRooms$ = this.rooms$.pipe(
-      map(rooms => rooms.filter(room => room.hotel.location === this.location)),
-      map(rooms => rooms.filter(room => room.capacity >= searchValues.guests)));
+    let freeRooms;
+    let freeRoomsInLocation;
+
+    const combined = combineLatest(this.bookingsOnThisDate$, this.rooms$)
+      .pipe(
+        map(
+          ([bookingsOnThisDate, rooms]) =>
+            bookingsOnThisDate.map(booking => booking.rooms.map(bookedRoom =>
+              freeRooms = rooms.filter(room => room.id !== bookedRoom.id)))),
+        map(x => freeRoomsInLocation = freeRooms.filter(freeRoom => freeRoom.hotel.location === this.location)),
+        map(y => freeRoomsInLocation.filter(room => room.capacity >= searchValues.guests))
+      );
+
+    return this.filterRooms$ = combined;
   }
-
 }

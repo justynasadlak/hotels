@@ -1,7 +1,7 @@
 import {Room} from './room';
 
 export interface Booking {
-  id?: number;
+  id?: string;
   user: string;
   startDate: string;
   endDate: string;
