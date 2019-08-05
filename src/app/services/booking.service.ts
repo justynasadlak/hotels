@@ -18,22 +18,7 @@ export class BookingService {
   constructor(private http: HttpClient, private store: Store) {
   }
 
-  getAllHotels(): Observable<Hotel[]> {
-    return this.http.get<Hotel[]>(this.url + '/hotels')
-      .pipe(delay(2000), tap(response => this.store.set('hotels', response)));
-  }
 
-  getAllRooms(): Observable<Room[]> {
-    return this.http.get<Room[]>(this.url + '/rooms').pipe(delay(2000), tap(response => this.store.set('rooms', response)));
-  }
-
-  getRoom(roomId: string): Observable<Room> {
-    return this.http.get<Room>(this.url + `/rooms/${roomId}`);
-  }
-
-  getAllFacilities(): Observable<Facility[]> {
-    return this.http.get<Facility[]>(this.url + '/facilities').pipe(delay(2000), tap(response => this.store.set('facilities', response)));
-  }
 
   getAllBookings(): Observable<Booking[]> {
     return this.http.get<Booking[]>(this.url + '/bookings').pipe(delay(2000), tap(response => this.store.set('bookings', response)));
