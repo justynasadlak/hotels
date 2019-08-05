@@ -1,0 +1,19 @@
+<table>
+  <tr>
+    <th>check-in</th>
+    <th>check-out</th>
+    <th>hotel</th>
+    <th>location</th>
+    <th>room</th>
+    <th>number of guests</th>
+  </tr>
+
+  <tr *ngFor="let userBooking of userBookings">
+    <td>{{formatDate(userBooking.startDate)}}</td>
+    <td>{{formatDate(userBooking.endDate)}}</td>
+    <td *ngFor="let room of userBooking.rooms">{{room.hotel.name}}</td>
+    <td *ngFor="let room of userBooking.rooms">{{room.hotel.location}}</td>
+    <td *ngFor="let room of userBooking.rooms">{{room.number}}</td>
+    <td *ngFor="let room of userBooking.rooms">{{room.capacity}}</td>
+  </tr>
+</table>
