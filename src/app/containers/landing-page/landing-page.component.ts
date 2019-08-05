@@ -25,7 +25,6 @@ export class LandingPageComponent implements OnInit {
   private startDate;
   private endDate;
   private username;
-  private bookedRoomsId = [];
 
   private hotels$: Observable<Hotel[]>;
   private locations$: Observable<string[]>;
