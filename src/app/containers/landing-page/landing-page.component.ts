@@ -4,7 +4,7 @@ import {Hotel} from '../../resources/models/hotel';
 import {FormBuilder} from '@angular/forms';
 import {Router} from '@angular/router';
 import {combineLatest, Observable} from 'rxjs';
-import {map, tap} from 'rxjs/operators';
+import {first, map, tap} from 'rxjs/operators';
 import {Room} from '../../resources/models/room';
 import {Store} from '../../../store';
 import {Facility} from '../../resources/models/facility';
@@ -63,7 +63,7 @@ export class LandingPageComponent implements OnInit {
   }
 
   onBook(roomId: string): void {
-    this.store.select('isLogged').subscribe(val => !val ? this.openLoginDialog() : this.bookRoom(roomId));
+    this.store.select('isLogged').pipe(first()).subscribe(val => !val ? this.openLoginDialog() : this.bookRoom(roomId));
   }
 
   private openLoginDialog() {
@@ -151,8 +151,7 @@ export class LandingPageComponent implements OnInit {
             || (checkOut >= b.startDate && checkOut < b.endDate)
             || (checkIn <= b.startDate && checkOut > b.endDate)
         )
-      ),
-      tap(console.log)
+      )
     );
 
     let freeRooms;
