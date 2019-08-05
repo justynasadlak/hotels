@@ -13,7 +13,7 @@ import {
   MatDialogModule,
   MatMenuModule,
   MatDatepickerModule,
-  MatNativeDateModule, MatAutocompleteModule
+  MatNativeDateModule, MatAutocompleteModule, MatTabsModule, MatListModule, MatDividerModule
 } from '@angular/material';
 
 @NgModule({
@@ -35,7 +35,10 @@ import {
     MatMenuModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    MatAutocompleteModule
+    MatAutocompleteModule,
+    MatTabsModule,
+    MatListModule,
+    MatDividerModule
   ]
 })
 export class CustomMaterialModule { }
