@@ -12,6 +12,7 @@ import {SearchData} from '../../resources/models/searchData';
 import {Booking} from '../../resources/models/booking';
 import {LoginDialogComponent} from '../../modules/user/login-dialog/login-dialog.component';
 import {MatDialog} from '@angular/material';
+import {HotelService} from '../../services/hotel.service';
 
 @Component({
   selector: 'app-landing-page',
@@ -40,6 +41,7 @@ export class LandingPageComponent implements OnInit {
   private filterFacilities$: Observable<Facility[]>;
 
   constructor(private bookingService: BookingService,
+              private hotelService: HotelService,
               private formBuilder: FormBuilder,
               private router: Router,
               private store: Store,
@@ -74,7 +76,7 @@ export class LandingPageComponent implements OnInit {
   }
 
   private bookRoom(roomId: string): void {
-    this.bookingService.getRoom(roomId).subscribe(room => {
+    this.hotelService.getRoom(roomId).subscribe(room => {
       this.rooms.push(room);
       this.getStartDate();
       this.getEndDate();
@@ -104,7 +106,7 @@ export class LandingPageComponent implements OnInit {
   }
 
   private getHotels(): void {
-    this.bookingService.getAllHotels().subscribe(hotels => {
+    this.hotelService.getAllHotels().subscribe(hotels => {
       this.getRooms();
       this.hotels$ = this.store.select<Hotel[]>('hotels');
       this.locations$ = this.getLocations();
@@ -112,7 +114,7 @@ export class LandingPageComponent implements OnInit {
   }
 
   private getRooms(): void {
-    this.bookingService.getAllRooms().subscribe(rooms => this.rooms$ = this.store.select<Room[]>('rooms'));
+    this.hotelService.getAllRooms().subscribe(rooms => this.rooms$ = this.store.select<Room[]>('rooms'));
   }
 
   // TODO
@@ -140,6 +142,26 @@ export class LandingPageComponent implements OnInit {
   }
 
   private filterRoomsBySearchValues(searchValues: SearchData): Observable<Room[]> {
+    this.getBookingsOnThisDate(searchValues);
+
+    let freeRooms;
+    let freeRoomsInLocation;
+
+    const combined = combineLatest(this.bookingsOnThisDate$, this.rooms$)
+      .pipe(
+        map(
+          ([bookingsOnThisDate, rooms]) =>
+            freeRooms = bookingsOnThisDate.length > 0 ?
+              this.getFreeRoomsOnThisDate(bookingsOnThisDate, rooms) : rooms
+        ),
+        map(x => freeRoomsInLocation = freeRooms.filter(freeRoom => freeRoom.hotel.location === this.location)),
+        map(y => freeRoomsInLocation.filter(room => room.capacity >= searchValues.guests))
+      );
+
+    return this.filterRooms$ = combined;
+  }
+
+  private getBookingsOnThisDate(searchValues: SearchData): void {
     const checkIn = new Date(searchValues.checkIn).toISOString();
     const checkOut = new Date(searchValues.checkOut).toISOString();
 
@@ -152,20 +174,13 @@ export class LandingPageComponent implements OnInit {
         )
       )
     );
+  }
 
-    let freeRooms;
-    let freeRoomsInLocation;
-
-    const combined = combineLatest(this.bookingsOnThisDate$, this.rooms$)
-      .pipe(
-        map(
-          ([bookingsOnThisDate, rooms]) =>
-            bookingsOnThisDate.map(booking => booking.rooms.map(bookedRoom =>
-              freeRooms = rooms.filter(room => room.id !== bookedRoom.id)))),
-        map(x => freeRoomsInLocation = freeRooms.filter(freeRoom => freeRoom.hotel.location === this.location)),
-        map(y => freeRoomsInLocation.filter(room => room.capacity >= searchValues.guests))
-      );
-
-    return this.filterRooms$ = combined;
+  private getFreeRoomsOnThisDate(bookingsOnThisDate: Booking[], rooms: Room[]): Room[] {
+    let freeRooms = rooms;
+    bookingsOnThisDate.map(booking => booking.rooms.map(bookedRoom =>
+      freeRooms = rooms.filter(room => room.id !== bookedRoom.id)
+    ));
+    return freeRooms;
   }
 }
