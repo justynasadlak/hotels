@@ -1,8 +1,8 @@
 <mat-tab-group>
-  <mat-tab label="My Profile">
-    <p>Name: {{ userData?.firstName }}</p>
-    <p>Surname: {{ userData?.lastName }}</p>
-    <p>E-mail: {{ userData?.email }}</p>
+  <mat-tab label="My Profile" *ngIf="userData">
+    <p>name: {{ userData.firstName }}</p>
+    <p>surname: {{ userData.lastName }}</p>
+    <p>e-mail: {{ userData.email }}</p>
   </mat-tab>
   <mat-tab label="My Bookings">
     <app-user-bookings></app-user-bookings>

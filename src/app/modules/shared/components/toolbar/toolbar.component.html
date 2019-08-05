@@ -1,13 +1,13 @@
 <mat-toolbar color="primary">
   <mat-toolbar-row>
-    <button mat-button [routerLink]="['/']">Hotels</button>
+    <button mat-button [routerLink]="['/']">hotels</button>
     <span class="example-spacer"></span>
-    <button mat-raised-button color="accent" class="example-icon" (click)="onLogin()" *ngIf="!(isLogged$ | async); else isLogged">Login</button>
+    <button mat-raised-button color="accent" class="example-icon" (click)="onLogin()" *ngIf="!(isLogged$ | async); else isLogged">login</button>
     <ng-template #isLogged>
-      <button mat-raised-button color="accent" class="example-icon" (click)="onProfile()">Profile</button>
-      <button mat-raised-button color="accent" class="example-icon" (click)="onLogout()">Logout</button>
+      <button mat-raised-button color="accent" class="example-icon" (click)="onProfile()">profile</button>
+      <button mat-raised-button color="accent" class="example-icon" (click)="onLogout()">logout</button>
     </ng-template>
-    <button class="example-icon" mat-button [matMenuTriggerFor]="menu">Language</button>
+    <button class="example-icon" mat-button [matMenuTriggerFor]="menu">language</button>
     <mat-menu #menu="matMenu">
       <button mat-menu-item>PL</button>
       <button mat-menu-item>ENG</button>

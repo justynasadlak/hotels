@@ -2,7 +2,7 @@
   <mat-card-content>
     <form [formGroup]="searchForm">
       <mat-form-field>
-        <input type="text" placeholder="City" matInput formControlName="city"
+        <input placeholder="city" matInput formControlName="city"
                [matAutocomplete]="auto">
         <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
           <mat-option *ngFor="let option of filteredLocations" [value]="option">
@@ -11,19 +11,19 @@
         </mat-autocomplete>
       </mat-form-field>
       <mat-form-field>
-        <input matInput placeholder="Guests" type="number" formControlName="guests"/>
+        <input matInput placeholder="guests" type="number" formControlName="guests"/>
       </mat-form-field>
       <mat-form-field>
-        <input matInput [matDatepicker]="picker" placeholder="Check-in" formControlName="checkIn">
+        <input matInput [matDatepicker]="picker" placeholder="check-in" formControlName="checkIn">
         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-datepicker #picker></mat-datepicker>
       </mat-form-field>
       <mat-form-field>
-        <input matInput [matDatepicker]="checkOut" placeholder="Check-out" formControlName="checkOut">
+        <input matInput [matDatepicker]="checkOut" placeholder="check-out" formControlName="checkOut">
         <mat-datepicker-toggle matSuffix [for]="checkOut"></mat-datepicker-toggle>
         <mat-datepicker #checkOut></mat-datepicker>
       </mat-form-field>
     </form>
   </mat-card-content>
-  <button mat-raised-button color="primary" (click)="onSearch()">Search</button>
+  <button mat-raised-button color="primary" (click)="onSearch()">search</button>
 </mat-card>
