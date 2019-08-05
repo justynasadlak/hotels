@@ -15,6 +15,7 @@ import {Store} from '../store';
 import { SearchHotelsListComponent } from './components/search-hotels-list/search-hotels-list.component';
 import { SearchBoxComponent } from './components/search-box/search-box.component';
 import { UserBookingsComponent } from './modules/user/user-bookings/user-bookings.component';
+import {RouterModule} from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { UserBookingsComponent } from './modules/user/user-bookings/user-booking
     ReactiveFormsModule,
     BrowserAnimationsModule,
     SharedModule,
-    HttpClientModule
+    HttpClientModule,
+    RouterModule
   ],
   entryComponents: [LoginDialogComponent],
   providers: [

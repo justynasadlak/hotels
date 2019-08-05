@@ -1,6 +1,6 @@
 <mat-toolbar color="primary">
   <mat-toolbar-row>
-    <span>Hotels</span>
+    <button mat-button [routerLink]="['/']">Hotels</button>
     <span class="example-spacer"></span>
     <button mat-raised-button color="accent" class="example-icon" (click)="onLogin()" *ngIf="!(isLogged$ | async); else isLogged">Login</button>
     <ng-template #isLogged>
