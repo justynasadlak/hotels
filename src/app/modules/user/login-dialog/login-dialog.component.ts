@@ -4,6 +4,7 @@ import {UserService} from '../../../services/user.service';
 import {MatDialogRef} from '@angular/material';
 import {User} from '../../../resources/models/user';
 import {UserData} from '../../../resources/models/userData';
+import {Store} from '../../../../store';
 
 @Component({
   selector: 'app-login-dialog',
@@ -15,7 +16,7 @@ export class LoginDialogComponent implements OnInit {
   private register = false;
   loginForm: FormGroup;
 
-  constructor(private formBuilder: FormBuilder, private userService: UserService, private dialogRef: MatDialogRef<LoginDialogComponent>) {
+  constructor(private formBuilder: FormBuilder, private userService: UserService, private store: Store, private dialogRef: MatDialogRef<LoginDialogComponent>) {
   }
 
   ngOnInit() {
@@ -51,6 +52,7 @@ export class LoginDialogComponent implements OnInit {
     this.userService.getUserToken(user).subscribe(data => {
       localStorage.setItem('token', data.id_token);
       this.userService.login();
+      this.store.set('username', user.username);
       this.dialogRef.close();
     }, (error) => {
       console.log('Http Call is failed from component');

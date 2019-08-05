@@ -5,8 +5,11 @@
       <mat-card-subtitle>{{ room.hotel.location}}</mat-card-subtitle>
     </mat-card-header>
     <mat-card-content>
-      <p>Number: {{ room.number }}</p>
-      <p>Capacity: {{ room.capacity }}</p>
+      <p>number: {{ room.number }}</p>
+      <p>capacity: {{ room.capacity }}</p>
     </mat-card-content>
+    <mat-card-actions>
+      <button mat-raised-button color="primary" (click)="onBook(room)">book</button>
+    </mat-card-actions>
   </mat-card>
 </div>

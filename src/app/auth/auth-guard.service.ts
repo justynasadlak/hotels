@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {CanActivate, Router, UrlTree} from '@angular/router';
 import {UserService} from '../services/user.service';
-import {catchError, switchMap, tap} from 'rxjs/operators';
+import {catchError, switchMap} from 'rxjs/operators';
 import {Observable, of} from 'rxjs';
 
 @Injectable({
@@ -15,7 +15,6 @@ export class AuthGuardService implements CanActivate {
 
   canActivate(): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     return this.userService.isAuthenticated().pipe(
-      tap(res => console.log(res)),
       switchMap((res: string) => {
         if (!!!res) {
           this.router.navigate(['']);

@@ -2,7 +2,7 @@
   <mat-card-content>
     <form [formGroup]="searchForm">
       <mat-form-field>
-        <input type="text" placeholder="City" matInput [formControl]="cities"
+        <input placeholder="city" matInput formControlName="city"
                [matAutocomplete]="auto">
         <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
           <mat-option *ngFor="let option of filteredLocations" [value]="option">
@@ -10,30 +10,20 @@
           </mat-option>
         </mat-autocomplete>
       </mat-form-field>
-
-     <!--TODO -->
-
-      <!--<mat-form-field>-->
-        <!--<input matInput placeholder="Hotel name"/>-->
-      <!--</mat-form-field>-->
-      <!--<mat-form-field>-->
-        <!--<input matInput placeholder="Guests" type="number"/>-->
-      <!--</mat-form-field>-->
-      <!--<mat-form-field>-->
-        <!--<input matInput [matDatepicker]="picker" placeholder="Check-in">-->
-        <!--<mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>-->
-        <!--<mat-datepicker #picker></mat-datepicker>-->
-      <!--</mat-form-field>-->
-      <!--<mat-form-field>-->
-        <!--<mat-label>Duration</mat-label>-->
-        <!--<mat-select>-->
-          <!--<mat-option-->
-            <!--*ngFor="let num of [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]"-->
-            <!--[value]="num">{{ num }}&nbsp;nights-->
-          <!--</mat-option>-->
-        <!--</mat-select>-->
-      <!--</mat-form-field>-->
+      <mat-form-field>
+        <input matInput placeholder="guests" type="number" formControlName="guests"/>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput [matDatepicker]="picker" placeholder="check-in" formControlName="checkIn">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput [matDatepicker]="checkOut" placeholder="check-out" formControlName="checkOut">
+        <mat-datepicker-toggle matSuffix [for]="checkOut"></mat-datepicker-toggle>
+        <mat-datepicker #checkOut></mat-datepicker>
+      </mat-form-field>
     </form>
   </mat-card-content>
-  <button mat-raised-button color="primary" (click)="onSearch()">Search</button>
+  <button mat-raised-button color="primary" (click)="onSearch()">search</button>
 </mat-card>

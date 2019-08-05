@@ -14,6 +14,8 @@ import {UserProfileComponent} from './modules/user/user-profile/user-profile.com
 import {Store} from '../store';
 import { SearchHotelsListComponent } from './components/search-hotels-list/search-hotels-list.component';
 import { SearchBoxComponent } from './components/search-box/search-box.component';
+import { UserBookingsComponent } from './modules/user/user-bookings/user-bookings.component';
+import {RouterModule} from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -22,7 +24,8 @@ import { SearchBoxComponent } from './components/search-box/search-box.component
     LoginDialogComponent,
     UserProfileComponent,
     SearchHotelsListComponent,
-    SearchBoxComponent
+    SearchBoxComponent,
+    UserBookingsComponent
   ],
   imports: [
     BrowserModule,
@@ -30,7 +33,8 @@ import { SearchBoxComponent } from './components/search-box/search-box.component
     ReactiveFormsModule,
     BrowserAnimationsModule,
     SharedModule,
-    HttpClientModule
+    HttpClientModule,
+    RouterModule
   ],
   entryComponents: [LoginDialogComponent],
   providers: [

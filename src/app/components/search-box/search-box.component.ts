@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 
 @Component({
   selector: 'app-search-box',
@@ -8,13 +8,11 @@ import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
 })
 export class SearchBoxComponent implements OnInit {
 
-  private cities = new FormControl();
-  private filteredLocations: string[];
-  private allLocations: string[];
-  searchForm: FormGroup
-
+  searchForm: FormGroup;
   @Output()
   search: EventEmitter<string> = new EventEmitter<string>();
+  private filteredLocations: string[];
+  private allLocations: string[];
 
   constructor(private formBuilder: FormBuilder) {
   }
@@ -23,32 +21,34 @@ export class SearchBoxComponent implements OnInit {
     if (locations) {
       this.allLocations = locations;
 
-      if (this.cities.value) {
-        this.filteredLocations = this._filter(locations, this.cities.value);
-        console.log(this.filteredLocations);
+      if (this.searchForm.controls.city.value) {
+        this.filteredLocations = this._filter(locations, this.searchForm.controls.city.value);
       }
     }
   }
 
   ngOnInit(): void {
     this.searchForm = this.formBuilder.group({
-        cities: [''],
-        hotel: [''],
-        guests: [''],
-        checkIn: [''],
-        duration: ['']
+        city: ['', Validators.required],
+        guests: ['', Validators.required],
+        checkIn: ['', Validators.required],
+        checkOut: ['', Validators.required]
       }
     );
     this.setFilteredLocations();
   }
 
   onSearch(): void {
-    this.search.emit(this.cities.value);
+    this.isStartDateBeforeEndDate(this.searchForm) ? this.search.emit(this.searchForm.value) : alert('Check-in should be earlier than check-out!');
 
   }
 
+  private isStartDateBeforeEndDate(searchForm: FormGroup) {
+    return searchForm.controls.checkIn.value < searchForm.controls.checkOut.value;
+  }
+
   private setFilteredLocations(): void {
-    this.cities.valueChanges.subscribe(
+    this.searchForm.controls.city.valueChanges.subscribe(
       value => {
         this.filteredLocations = this._filter(this.allLocations, value);
       }

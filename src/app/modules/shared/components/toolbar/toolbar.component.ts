@@ -14,13 +14,12 @@ import {Store} from '../../../../../store';
 export class ToolbarComponent implements OnInit {
 
   private isLogged$: Observable<boolean>;
-  private user: string;
 
   constructor(public dialog: MatDialog, private userService: UserService, private router: Router, private store: Store) {
 
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.userService.isAuthenticated().subscribe();
     this.isLogged$ = this.store.select<boolean>('isLogged');
 
