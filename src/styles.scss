@@ -9,3 +9,15 @@ body {
 ::first-letter {
   text-transform: capitalize;
 }
+
+.register__wrapper {
+  height: 70vh;
+}
+
+.login__wrapper {
+  height: 50vh;
+}
+.register__wrapper, .login__wrapper {
+  overflow: hidden;
+  transition: height 0.5s ease-in-out;
+}
