@@ -19,6 +19,9 @@ export class SearchHotelsListComponent {
   @Input()
   facilities: Facility[];
 
+  @Input()
+  isDisabled: boolean;
+
   @Output()
   book: EventEmitter<string> = new EventEmitter<string>();
 

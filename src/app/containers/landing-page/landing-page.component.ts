@@ -20,6 +20,15 @@ import {HotelService} from '../../services/hotel.service';
   styleUrls: ['./landing-page.component.scss']
 })
 export class LandingPageComponent implements OnInit {
+
+  progressBar = true;
+  isDisabled = false;
+
+  locations$: Observable<string[]>;
+  filterRooms$: Observable<Room[]>;
+  filterHotels$: Observable<Hotel[]>;
+  filterFacilities$: Observable<Facility[]>;
+
   private rooms: Room[] = [];
   private location: string;
   private bookingData: Booking;
@@ -28,17 +37,11 @@ export class LandingPageComponent implements OnInit {
   private username;
 
   private hotels$: Observable<Hotel[]>;
-  private locations$: Observable<string[]>;
   private rooms$: Observable<Room[]>;
   private bookings$: Observable<Booking[]>;
   private bookingsOnThisDate$: Observable<Booking[]>;
-
   // TODO
   // private facilities$: Observable<Facility[]>;
-
-  private filterRooms$: Observable<Room[]>;
-  private filterHotels$: Observable<Hotel[]>;
-  private filterFacilities$: Observable<Facility[]>;
 
   constructor(private bookingService: BookingService,
               private hotelService: HotelService,
@@ -64,6 +67,8 @@ export class LandingPageComponent implements OnInit {
   }
 
   onBook(roomId: string): void {
+    this.progressBar = true;
+    this.isDisabled = true;
     this.store.select('isLogged').pipe(first()).subscribe(val => !val ? this.openLoginDialog() : this.bookRoom(roomId));
   }
 
@@ -90,7 +95,14 @@ export class LandingPageComponent implements OnInit {
         rooms: this.rooms
       };
       console.log(this.bookingData);
-      this.bookingService.addBooking(this.bookingData).subscribe();
+      this.bookingService.addBooking(this.bookingData).subscribe(x => {
+          this.progressBar = false;
+          this.router.navigate(['my-profile']);
+        },
+        error1 => {
+          alert(error1);
+          this.isDisabled = false;
+        });
 
     });
   }
@@ -112,6 +124,7 @@ export class LandingPageComponent implements OnInit {
       this.getRooms();
       this.hotels$ = this.store.select<Hotel[]>('hotels');
       this.locations$ = this.getLocations();
+      this.progressBar = false;
     });
   }
 

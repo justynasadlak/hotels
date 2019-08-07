@@ -9,7 +9,7 @@
       <p>capacity: {{ room.capacity }}</p>
     </mat-card-content>
     <mat-card-actions>
-      <button mat-raised-button color="primary" (click)="onBook(room)">book</button>
+      <button mat-raised-button color="primary" [disabled]="isDisabled" (click)="onBook(room)">book</button>
     </mat-card-actions>
   </mat-card>
 </div>

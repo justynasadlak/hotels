@@ -1,10 +1,12 @@
 <div class="landing__wrapper">
+  <mat-progress-bar mode="indeterminate" *ngIf="progressBar"></mat-progress-bar>
   <app-search-box [locations]="locations$ | async" (search)="onSearch($event)"></app-search-box>
 
   <app-search-hotels-list
     [hotels]="filterHotels$ | async"
     [rooms]="filterRooms$ | async"
     [facilities]="filterFacilities$ | async"
+    [isDisabled]="isDisabled"
     (book)="onBook($event)"
   >
   </app-search-hotels-list>

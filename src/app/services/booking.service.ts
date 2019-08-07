@@ -1,11 +1,8 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {Hotel} from '../resources/models/hotel';
-import {Room} from '../resources/models/room';
 import {delay, tap} from 'rxjs/operators';
 import {Store} from '../../store';
-import {Facility} from '../resources/models/facility';
 import {Booking} from '../resources/models/booking';
 
 @Injectable({
@@ -19,13 +16,12 @@ export class BookingService {
   }
 
 
-
   getAllBookings(): Observable<Booking[]> {
     return this.http.get<Booking[]>(this.url + '/bookings').pipe(delay(2000), tap(response => this.store.set('bookings', response)));
   }
 
   addBooking(booking: Booking): Observable<Booking> {
-    return this.http.post<Booking>(this.url + '/bookings', booking);
+    return this.http.post<Booking>(this.url + '/bookings', booking).pipe(delay(2000));
   }
 
 
