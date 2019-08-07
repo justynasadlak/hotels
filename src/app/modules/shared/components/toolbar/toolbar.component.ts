@@ -28,7 +28,7 @@ export class ToolbarComponent implements OnInit {
   onLogin(): void {
     this.dialog.open(LoginDialogComponent, {
       data: {
-        register: false
+        isRegisterView: false
       },
       disableClose: true,
       panelClass: 'login__wrapper'

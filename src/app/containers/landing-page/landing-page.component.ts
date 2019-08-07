@@ -69,9 +69,11 @@ export class LandingPageComponent implements OnInit {
 
   private openLoginDialog() {
     this.dialog.open(LoginDialogComponent, {
+      data: {
+        isRegisterView: false
+      },
       disableClose: true,
-      width: '250px',
-      maxHeight: '350px'
+      panelClass: 'login__wrapper'
     });
   }
 
