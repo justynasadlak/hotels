@@ -17,8 +17,7 @@ body {
 .login__wrapper {
   height: 50vh;
 }
-
 .register__wrapper, .login__wrapper {
   overflow: hidden;
-  transition: all 0.5s ease-in-out;
+  transition: height 0.5s ease-in-out;
 }
