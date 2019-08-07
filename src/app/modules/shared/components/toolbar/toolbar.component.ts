@@ -13,7 +13,7 @@ import {Store} from '../../../../../store';
 })
 export class ToolbarComponent implements OnInit {
 
-  private isLogged$: Observable<boolean>;
+  isLogged$: Observable<boolean>;
 
   constructor(public dialog: MatDialog, private userService: UserService, private router: Router, private store: Store) {
 
@@ -27,9 +27,11 @@ export class ToolbarComponent implements OnInit {
 
   onLogin(): void {
     this.dialog.open(LoginDialogComponent, {
+      data: {
+        register: false
+      },
       disableClose: true,
-      width: '250px',
-      maxHeight: '350px'
+      panelClass: 'login__wrapper'
     });
   }
 

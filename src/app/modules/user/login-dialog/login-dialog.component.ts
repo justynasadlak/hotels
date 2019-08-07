@@ -1,10 +1,14 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {UserService} from '../../../services/user.service';
-import {MatDialogRef} from '@angular/material';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
 import {User} from '../../../resources/models/user';
 import {UserData} from '../../../resources/models/userData';
 import {Store} from '../../../../store';
+
+export interface DialogData {
+  isRegisterView: boolean;
+}
 
 @Component({
   selector: 'app-login-dialog',
@@ -13,13 +17,21 @@ import {Store} from '../../../../store';
 })
 export class LoginDialogComponent implements OnInit {
 
-  private register = false;
+  isRegisterView = false;
   loginForm: FormGroup;
+  dialogMessage = 'don\'t you have an account yet?';
+  changeViewButtonText = 'register';
 
-  constructor(private formBuilder: FormBuilder, private userService: UserService, private store: Store, private dialogRef: MatDialogRef<LoginDialogComponent>) {
+  constructor(private formBuilder: FormBuilder,
+              private userService: UserService,
+              private store: Store,
+              private dialogRef: MatDialogRef<LoginDialogComponent>,
+              @Inject(MAT_DIALOG_DATA) private data: DialogData
+  ) {
+    this.isRegisterView = data.isRegisterView;
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.loginForm = this.formBuilder.group({
       login: ['', [Validators.required, Validators.maxLength(16)]],
       email: ['', Validators.required],
@@ -30,19 +42,22 @@ export class LoginDialogComponent implements OnInit {
   }
 
   onSubmit(): void {
-    !this.register ? this.login() : this.signUp();
+    !this.isRegisterView ? this.login() : this.signUp();
   }
 
-  onRegister(): void {
-    this.register = true;
-    console.log('do rejestracji');
+  onViewChange(): void {
+    this.isRegisterView = !this.isRegisterView;
+    this.dialogMessage = this.isRegisterView ? 'do you already have an account?' : 'don\'t you have an account yet?';
+    this.changeViewButtonText = this.isRegisterView ? 'login' : 'register';
+    this.dialogRef.removePanelClass(this.isRegisterView ? 'login__wrapper' : 'register__wrapper');
+    this.dialogRef.addPanelClass(this.isRegisterView ? 'register__wrapper' : 'login__wrapper');
   }
 
   getButtonName(): string {
-    return this.register ? 'SIGN UP' : 'SIGN IN';
+    return this.isRegisterView ? 'SIGN UP' : 'SIGN IN';
   }
 
-  login(): void {
+  private login(): void {
     const user: User = {
       'password': this.loginForm.value.password,
       'rememberMe': this.loginForm.value.rememberMe,
@@ -59,7 +74,7 @@ export class LoginDialogComponent implements OnInit {
     });
   }
 
-  signUp(): void {
+  private signUp(): void {
     const userData: UserData = {
       'login': this.loginForm.value.login,
       'email': this.loginForm.value.email,
