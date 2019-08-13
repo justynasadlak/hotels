@@ -4,6 +4,6 @@ export interface Room {
   id?: string;
   number?: number;
   capacity?: number;
-  prices?: number;
+  price?: number;
   hotel?: Hotel;
 }
