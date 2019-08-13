@@ -16,6 +16,8 @@ import { SearchHotelsListComponent } from './components/search-hotels-list/searc
 import { SearchBoxComponent } from './components/search-box/search-box.component';
 import { UserBookingsComponent } from './modules/user/user-bookings/user-bookings.component';
 import {RouterModule} from '@angular/router';
+import {HotelDetailsComponent} from './containers/hotel-details/hotel-details.component';
+import { HotelDetailsViewComponent } from './components/hotel-details-view/hotel-details-view.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +27,9 @@ import {RouterModule} from '@angular/router';
     UserProfileComponent,
     SearchHotelsListComponent,
     SearchBoxComponent,
-    UserBookingsComponent
+    UserBookingsComponent,
+    HotelDetailsComponent,
+    HotelDetailsViewComponent
   ],
   imports: [
     BrowserModule,
