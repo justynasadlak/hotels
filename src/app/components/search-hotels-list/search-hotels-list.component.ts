@@ -13,11 +13,11 @@ export class SearchHotelsListComponent {
   @Input()
   hotels: Hotel[];
 
-  @Input()
-  rooms: Room[];
-
-  @Input()
-  facilities: Facility[];
+  // @Input()
+  // rooms: Room[];
+  //
+  // @Input()
+  // facilities: Facility[];
 
   @Input()
   isDisabled: boolean;
@@ -25,7 +25,11 @@ export class SearchHotelsListComponent {
   @Output()
   book: EventEmitter<string> = new EventEmitter<string>();
 
-  onBook(room: Room): void {
-    this.book.emit(room.id);
+  @Output()
+  details: EventEmitter<Hotel> = new EventEmitter<Hotel>();
+
+
+  onDetails(hotel: Hotel): void {
+    this.details.emit(hotel);
   }
 }
