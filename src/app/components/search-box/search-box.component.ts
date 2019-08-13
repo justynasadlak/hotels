@@ -43,7 +43,7 @@ export class SearchBoxComponent implements OnInit {
 
   }
 
-  private isStartDateBeforeEndDate(searchForm: FormGroup) {
+  private isStartDateBeforeEndDate(searchForm: FormGroup): boolean {
     return searchForm.controls.checkIn.value < searchForm.controls.checkOut.value;
   }
 
