@@ -1,5 +1,7 @@
 import { Hotel } from '../../../resources/models/hotel';
 import { fromMainPageActions } from './main-page.actions';
+import { Booking } from '../../../resources/models/booking';
+import { act } from '@ngrx/effects';
 
 export const MAIN_PAGE_FEATURE_KEY = 'main-page';
 
@@ -9,10 +11,12 @@ export interface MainPagePartialState {
 
 export interface MainPageState {
   hotels: Hotel[];
+  bookings: Booking[];
 }
 
 export const initialState: MainPageState = {
-  hotels: []
+  hotels: [],
+  bookings: []
 };
 
 export function mainPageReducer(
@@ -25,6 +29,12 @@ export function mainPageReducer(
       break;
     case fromMainPageActions.Types.GetHotelsSuccess:
       state = { ...state, hotels: action.payload };
+      break;
+    case fromMainPageActions.Types.GetBookings:
+      state = { ...state, bookings: [] };
+      break;
+    case fromMainPageActions.Types.GetBookingsSuccess:
+      state = { ...state, bookings: action.payload };
   }
   return state;
 }

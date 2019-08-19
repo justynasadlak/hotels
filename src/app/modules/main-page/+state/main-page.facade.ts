@@ -7,10 +7,15 @@ import { MainPagePartialState } from './main-page.reducer';
 @Injectable()
 export class MainPageFacade {
   hotels$ = this.store.pipe(select(mainPageQuery.getHotels));
+  bookings$ = this.store.pipe(select(mainPageQuery.getBookings));
 
   constructor(private store: Store<MainPagePartialState>) {}
 
   getHotels(): void {
     this.store.dispatch(new fromMainPageActions.GetHotels());
+  }
+
+  getBookings(): void {
+    this.store.dispatch(new fromMainPageActions.GetBookings());
   }
 }

@@ -4,7 +4,7 @@ import { Hotel } from '../../../../resources/models/hotel';
 import { FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 import { combineLatest, Observable, of } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
+import { first, map, tap } from 'rxjs/operators';
 import { Room } from '../../../../resources/models/room';
 import { Store } from '../../../../../store';
 import { Facility } from '../../../../resources/models/facility';
@@ -25,22 +25,14 @@ export class LandingPageComponent implements OnInit {
   isDisabled = false;
 
   locations$: Observable<string[]>;
-  filterRooms$: Observable<Room[]>;
   filterHotels$: Observable<Hotel[]>;
-  filterFacilities$: Observable<Facility[]>;
+
+  hotels$ = this.mainPageFacade.hotels$;
 
   private rooms: Room[] = [];
   private location: string;
-  private bookingData: Booking;
-  private startDate;
-  private endDate;
-  private username;
 
-  // private hotels$: Observable<Hotel[]>;
-  hotels$ = this.mainPageFacade.hotels$;
-
-  private rooms$: Observable<Room[]>;
-  private bookings$: Observable<Booking[]>;
+  private bookings$ = this.mainPageFacade.bookings$;
   private bookingsOnThisDate$: Observable<Booking[]>;
   private hotelsResults: Observable<Hotel[]>;
   // TODO
@@ -106,7 +98,7 @@ export class LandingPageComponent implements OnInit {
   private getHotels(): void {
     this.mainPageFacade.getHotels();
     console.log('this.hotels$');
-    this.hotels$.subscribe(console.log);
+    this.hotels$.pipe(first()).subscribe(console.log);
 
     // this.hotelService.getAllHotels().subscribe(hotels => {
     //   this.getRooms();
@@ -117,16 +109,16 @@ export class LandingPageComponent implements OnInit {
     //   // this.hotels$ = this.store.select<Hotel[]>('hotels');
     this.locations$ = this.getLocations();
     console.log('this.locations$');
-    this.locations$.subscribe(console.log);
-    //   this.progressBar = false;
+    this.locations$.pipe(first()).subscribe(console.log);
+    this.progressBar = false;
     // });
   }
 
-  private getRooms(): void {
-    this.hotelService
-      .getAllRooms()
-      .subscribe(rooms => (this.rooms$ = this.store.select<Room[]>('rooms')));
-  }
+  // private getRooms(): void {
+  //   this.hotelService
+  //     .getAllRooms()
+  //     .subscribe(rooms => (this.rooms$ = this.store.select<Room[]>('rooms')));
+  // }
 
   private getLocations(): Observable<string[]> {
     return this.hotels$.pipe(
@@ -139,9 +131,11 @@ export class LandingPageComponent implements OnInit {
   }
 
   private getBookings(): void {
-    this.bookingService
-      .getAllBookings()
-      .subscribe(bookings => (this.bookings$ = this.store.select('bookings')));
+    this.mainPageFacade.getBookings();
+    this.bookings$.subscribe(console.log);
+    // this.bookingService
+    //   .getAllBookings()
+    //   .subscribe(bookings => (this.bookings$ = this.store.select<Booking[]>('bookings')));
   }
 
   private filterHotelsBySearchValues(searchValues: SearchData): Observable<Hotel[]> {

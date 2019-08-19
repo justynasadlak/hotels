@@ -8,6 +8,12 @@ const getHotels = createSelector(
   state => state.hotels
 );
 
+const getBookings = createSelector(
+  getMainPageState,
+  state => state.bookings
+);
+
 export const mainPageQuery = {
-  getHotels
+  getHotels,
+  getBookings
 };
