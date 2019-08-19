@@ -1,25 +1,28 @@
-<div class="login__wrapper">
-    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-        <mat-form-field>
-          <input matInput placeholder="login" formControlName="login">
-        </mat-form-field>
-      <mat-form-field *ngIf="register">
-        <input matInput type="email" placeholder="email" formControlName="email">
-      </mat-form-field>
-        <mat-form-field>
-          <input matInput type="password" placeholder="password" formControlName="password">
-        </mat-form-field>
-      <mat-form-field *ngIf="register">
-        <input matInput type="password" placeholder="repeat password" formControlName="repeatPassword">
-      </mat-form-field>
-      <mat-checkbox formControlName="rememberMe">remember me</mat-checkbox>
-        <button mat-flat-button color="primary" type="submit">
-          {{ getButtonName() }}
-        </button>
-        <button mat-button type="button" mat-dialog-close>cancel</button>
-    </form>
-  <div *ngIf="!register">
-    <p>you don't have an account yet?</p>
-    <button mat-button (click)="onRegister()">register</button>
-  </div>
+<form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+  <mat-form-field>
+    <input matInput placeholder="login" formControlName="login" />
+  </mat-form-field>
+  <mat-form-field *ngIf="isRegisterView">
+    <input matInput type="email" placeholder="email" formControlName="email" />
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput type="password" placeholder="password" formControlName="password" />
+  </mat-form-field>
+  <mat-form-field *ngIf="isRegisterView">
+    <input
+      matInput
+      type="password"
+      placeholder="repeat password"
+      formControlName="repeatPassword"
+    />
+  </mat-form-field>
+  <mat-checkbox formControlName="rememberMe">remember me</mat-checkbox>
+  <button mat-flat-button color="primary" type="submit">
+    {{ buttonText }}
+  </button>
+  <button mat-button type="button" mat-dialog-close>cancel</button>
+</form>
+<div>
+  <p>{{ dialogMessage }}</p>
+  <button mat-button (click)="onViewChange()">{{ changeViewButtonText }}</button>
 </div>

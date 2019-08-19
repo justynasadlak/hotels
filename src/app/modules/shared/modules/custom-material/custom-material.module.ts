@@ -13,7 +13,7 @@ import {
   MatDialogModule,
   MatMenuModule,
   MatDatepickerModule,
-  MatNativeDateModule, MatAutocompleteModule, MatTabsModule, MatListModule, MatDividerModule
+  MatNativeDateModule, MatAutocompleteModule, MatTabsModule, MatListModule, MatDividerModule, MatProgressBarModule
 } from '@angular/material';
 
 @NgModule({
@@ -38,7 +38,8 @@ import {
     MatAutocompleteModule,
     MatTabsModule,
     MatListModule,
-    MatDividerModule
+    MatDividerModule,
+    MatProgressBarModule
   ]
 })
 export class CustomMaterialModule { }
