@@ -1,7 +1,5 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {Hotel} from '../../resources/models/hotel';
-import {Room} from '../../resources/models/room';
-import {Facility} from '../../resources/models/facility';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Hotel } from '../../resources/models/hotel';
 
 @Component({
   selector: 'app-search-hotels-list',
@@ -9,7 +7,6 @@ import {Facility} from '../../resources/models/facility';
   styleUrls: ['./search-hotels-list.component.scss']
 })
 export class SearchHotelsListComponent {
-
   @Input()
   hotels: Hotel[];
 
@@ -27,7 +24,6 @@ export class SearchHotelsListComponent {
 
   @Output()
   details: EventEmitter<Hotel> = new EventEmitter<Hotel>();
-
 
   onDetails(hotel: Hotel): void {
     this.details.emit(hotel);

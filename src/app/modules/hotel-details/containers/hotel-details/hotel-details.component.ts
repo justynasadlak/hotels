@@ -1,12 +1,12 @@
-import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
-import {Location} from '@angular/common';
-import {Store} from '../../../store';
-import {HotelService} from '../../services/hotel.service';
-import {BookingService} from '../../services/booking.service';
-import {Booking} from '../../resources/models/booking';
-import {tap} from 'rxjs/operators';
-import {Observable, of} from 'rxjs';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Location } from '@angular/common';
+import { Store } from '../../../../../store';
+import { HotelService } from '../../../../services/hotel.service';
+import { BookingService } from '../../../../services/booking.service';
+import { Booking } from '../../../../resources/models/booking';
+import { tap } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
 
 @Component({
   selector: 'app-hotel-details',
@@ -14,7 +14,6 @@ import {Observable, of} from 'rxjs';
   styleUrls: ['./hotel-details.component.scss']
 })
 export class HotelDetailsComponent implements OnInit {
-
   id: string;
   name: string;
   location: string;
@@ -29,12 +28,14 @@ export class HotelDetailsComponent implements OnInit {
   private roomsToBook = [];
   private successBooking: Booking;
 
-  public constructor(private route: ActivatedRoute,
-                     private _location: Location,
-                     private store: Store,
-                     private hotelService: HotelService,
-                     private bookingService: BookingService,
-                     private router: Router) {
+  public constructor(
+    private route: ActivatedRoute,
+    private _location: Location,
+    private store: Store,
+    private hotelService: HotelService,
+    private bookingService: BookingService,
+    private router: Router
+  ) {
     this.route.queryParams.subscribe(params => {
       this.id = params.id;
       this.name = params.name;
@@ -66,30 +67,39 @@ export class HotelDetailsComponent implements OnInit {
         rooms: this.roomsToBook
       };
       console.log(this.bookingData);
-      this.bookingService.addBooking(this.bookingData).subscribe(val => {
+      this.bookingService.addBooking(this.bookingData).subscribe(
+        val => {
           // this.progressBar = false;
-        this.successBooking = val;
+          this.successBooking = val;
           this.router.navigate(['my-profile']);
         },
         error1 => {
           alert(error1);
           this.isDisabled = false;
-        });
-
+        }
+      );
     });
     return of(this.successBooking);
   }
 
   private getStartDate(): void {
-    this.store.select('startDate').pipe(tap(date =>
-      this.startDate = date)).subscribe();
+    this.store
+      .select('startDate')
+      .pipe(tap(date => (this.startDate = date)))
+      .subscribe();
   }
 
   private getEndDate(): void {
-    this.store.select('endDate').pipe(tap(date => this.endDate = date)).subscribe();
+    this.store
+      .select('endDate')
+      .pipe(tap(date => (this.endDate = date)))
+      .subscribe();
   }
 
   getUsername(): void {
-    this.store.select('username').pipe(tap(user => this.username = user)).subscribe();
+    this.store
+      .select('username')
+      .pipe(tap(user => (this.username = user)))
+      .subscribe();
   }
 }
