@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Hotel } from '../../resources/models/hotel';
+import { Hotel } from '../../../../resources/models/hotel';
 
 @Component({
   selector: 'app-search-hotels-list',
