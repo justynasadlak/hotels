@@ -2,9 +2,9 @@
   <button mat-raised-button color="primary" (click)="onBack()">back</button>
   <mat-card-header>
     <mat-card-title>
-      {{ name}}
+      {{ name }}
     </mat-card-title>
-    <mat-card-subtitle>{{ location}}</mat-card-subtitle>
+    <mat-card-subtitle>{{ location }}</mat-card-subtitle>
   </mat-card-header>
   <mat-card-content>
     <div *ngFor="let facility of facilities">
@@ -17,6 +17,8 @@
       <p>capacity: {{ room.capacity }}</p>
       <p>price: {{ room.price }}</p>
     </div>
-    <button mat-raised-button color="primary" [disabled]="isDisabled" (click)="onBook(room)">book</button>
+    <button mat-raised-button color="primary" [disabled]="isDisabled" (click)="onBook(room)">
+      book
+    </button>
   </mat-card>
 </mat-card>

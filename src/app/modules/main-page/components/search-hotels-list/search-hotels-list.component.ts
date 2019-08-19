@@ -10,12 +10,6 @@ export class SearchHotelsListComponent {
   @Input()
   hotels: Hotel[];
 
-  // @Input()
-  // rooms: Room[];
-  //
-  // @Input()
-  // facilities: Facility[];
-
   @Input()
   isDisabled: boolean;
 

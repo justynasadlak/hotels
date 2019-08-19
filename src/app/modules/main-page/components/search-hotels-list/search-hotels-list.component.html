@@ -2,8 +2,8 @@
   <div *ngFor="let hotel of hotels">
     <mat-card>
       <mat-card-header>
-        <mat-card-title>{{ hotel.name}}</mat-card-title>
-        <mat-card-subtitle>{{hotel.location}}</mat-card-subtitle>
+        <mat-card-title>{{ hotel.name }}</mat-card-title>
+        <mat-card-subtitle>{{ hotel.location }}</mat-card-subtitle>
       </mat-card-header>
       <mat-card-content>
         <div *ngFor="let facility of hotel.facilities">
@@ -11,7 +11,14 @@
         </div>
       </mat-card-content>
       <mat-card-actions>
-        <button mat-raised-button color="primary" [disabled]="isDisabled" (click)="onDetails(hotel)">details</button>
+        <button
+          mat-raised-button
+          color="primary"
+          [disabled]="isDisabled"
+          (click)="onDetails(hotel)"
+        >
+          details
+        </button>
       </mat-card-actions>
     </mat-card>
   </div>

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Facility } from '../../../../resources/models/facility';
 import { Room } from '../../../../resources/models/room';
 
@@ -7,7 +7,7 @@ import { Room } from '../../../../resources/models/room';
   templateUrl: './hotel-details-view.component.html',
   styleUrls: ['./hotel-details-view.component.scss']
 })
-export class HotelDetailsViewComponent implements OnInit {
+export class HotelDetailsViewComponent {
   @Input()
   name: string;
 
@@ -25,10 +25,6 @@ export class HotelDetailsViewComponent implements OnInit {
 
   @Output()
   book: EventEmitter<string> = new EventEmitter<string>();
-
-  constructor() {}
-
-  ngOnInit(): void {}
 
   onBook(room: Room): void {
     this.book.emit(room.id);
