@@ -1,9 +1,9 @@
-import {Component, OnInit} from '@angular/core';
-import {Store} from '../../../../store';
-import {Observable} from 'rxjs';
-import {Booking} from '../../../resources/models/booking';
-import {BookingService} from '../../../services/booking.service';
-import {tap} from 'rxjs/operators';
+import { Component, OnInit } from '@angular/core';
+import { Store } from '../../../../store';
+import { Observable } from 'rxjs';
+import { Booking } from '../../../resources/models/booking';
+import { BookingService } from '../../../services/booking.service';
+import { tap } from 'rxjs/operators';
 import * as moment from 'moment';
 
 @Component({
@@ -12,13 +12,11 @@ import * as moment from 'moment';
   styleUrls: ['./user-bookings.component.scss']
 })
 export class UserBookingsComponent implements OnInit {
-
   private bookings$: Observable<Booking[]>;
   private username;
   userBookings: Booking[];
 
-  constructor(private store: Store, private bookingService: BookingService) {
-  }
+  constructor(private store: Store, private bookingService: BookingService) {}
 
   ngOnInit(): void {
     this.getUserBookings();
@@ -31,10 +29,16 @@ export class UserBookingsComponent implements OnInit {
   private getUserBookings(): void {
     this.bookingService.getAllBookings().subscribe(bookings => {
       this.bookings$ = this.store.select('bookings');
-      this.store.select('username').pipe(
-        tap(user => this.username = user),
-        tap(x => this.bookings$.subscribe(
-          b => this.userBookings = b.filter(booking => booking.user === this.username))))
+      this.store
+        .select('username')
+        .pipe(
+          tap(user => (this.username = user)),
+          tap(x =>
+            this.bookings$.subscribe(
+              b => (this.userBookings = b.filter(booking => booking.user === this.username))
+            )
+          )
+        )
         .subscribe();
     });
   }
