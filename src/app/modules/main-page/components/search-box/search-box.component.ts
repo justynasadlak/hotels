@@ -1,5 +1,5 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-search-box',
@@ -7,18 +7,16 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
   styleUrls: ['./search-box.component.scss']
 })
 export class SearchBoxComponent implements OnInit {
-
   searchForm: FormGroup;
   @Output()
   search: EventEmitter<string> = new EventEmitter<string>();
   private filteredLocations: string[];
   private allLocations: string[];
 
-  constructor(private formBuilder: FormBuilder) {
-  }
+  constructor(private formBuilder: FormBuilder) {}
 
   @Input() set locations(locations: string[]) {
-    if (locations) {
+    if (locations && this.searchForm) {
       this.allLocations = locations;
 
       if (this.searchForm.controls.city.value) {
@@ -29,18 +27,18 @@ export class SearchBoxComponent implements OnInit {
 
   ngOnInit(): void {
     this.searchForm = this.formBuilder.group({
-        city: ['', Validators.required],
-        guests: ['', Validators.required],
-        checkIn: ['', Validators.required],
-        checkOut: ['', Validators.required]
-      }
-    );
+      city: ['', Validators.required],
+      guests: ['', Validators.required],
+      checkIn: ['', Validators.required],
+      checkOut: ['', Validators.required]
+    });
     this.setFilteredLocations();
   }
 
   onSearch(): void {
-    this.isStartDateBeforeEndDate(this.searchForm) ? this.search.emit(this.searchForm.value) : alert('Check-in should be earlier than check-out!');
-
+    this.isStartDateBeforeEndDate(this.searchForm)
+      ? this.search.emit(this.searchForm.value)
+      : alert('Check-in should be earlier than check-out!');
   }
 
   private isStartDateBeforeEndDate(searchForm: FormGroup): boolean {
@@ -48,11 +46,9 @@ export class SearchBoxComponent implements OnInit {
   }
 
   private setFilteredLocations(): void {
-    this.searchForm.controls.city.valueChanges.subscribe(
-      value => {
-        this.filteredLocations = this._filter(this.allLocations, value);
-      }
-    );
+    this.searchForm.controls.city.valueChanges.subscribe(value => {
+      this.filteredLocations = this._filter(this.allLocations, value);
+    });
   }
 
   private _filter(locations: string[], value: string): string[] {

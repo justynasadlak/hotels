@@ -13,6 +13,7 @@ import { Booking } from '../../../../resources/models/booking';
 import { LoginDialogComponent } from '../../../user/login-dialog/login-dialog.component';
 import { MatDialog } from '@angular/material';
 import { HotelService } from '../../../../services/hotel.service';
+import { MainPageFacade } from '../../+state/main-page.facade';
 
 @Component({
   selector: 'app-landing-page',
@@ -34,7 +35,9 @@ export class LandingPageComponent implements OnInit {
   private startDate;
   private endDate;
   private username;
-  private hotels$: Observable<Hotel[]>;
+
+  // private hotels$: Observable<Hotel[]>;
+  hotels$ = this.mainPageFacade.hotels$;
 
   private rooms$: Observable<Room[]>;
   private bookings$: Observable<Booking[]>;
@@ -44,6 +47,7 @@ export class LandingPageComponent implements OnInit {
   // private facilities$: Observable<Facility[]>;
 
   constructor(
+    private mainPageFacade: MainPageFacade,
     private bookingService: BookingService,
     private hotelService: HotelService,
     private formBuilder: FormBuilder,
@@ -100,12 +104,22 @@ export class LandingPageComponent implements OnInit {
   }
 
   private getHotels(): void {
-    this.hotelService.getAllHotels().subscribe(hotels => {
-      this.getRooms();
-      this.hotels$ = this.store.select<Hotel[]>('hotels');
-      this.locations$ = this.getLocations();
-      this.progressBar = false;
-    });
+    this.mainPageFacade.getHotels();
+    console.log('this.hotels$');
+    this.hotels$.subscribe(console.log);
+
+    // this.hotelService.getAllHotels().subscribe(hotels => {
+    //   this.getRooms();
+    //
+    //   // this.hotels$ =
+    //
+    //
+    //   // this.hotels$ = this.store.select<Hotel[]>('hotels');
+    this.locations$ = this.getLocations();
+    console.log('this.locations$');
+    this.locations$.subscribe(console.log);
+    //   this.progressBar = false;
+    // });
   }
 
   private getRooms(): void {

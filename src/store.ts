@@ -1,34 +1,34 @@
-import {BehaviorSubject, Observable} from 'rxjs';
-import {distinctUntilChanged, pluck} from 'rxjs/operators';
-import {Hotel} from './app/resources/models/hotel';
-import {Room} from './app/resources/models/room';
-import {Facility} from './app/resources/models/facility';
-import {Booking} from './app/resources/models/booking';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { distinctUntilChanged, pluck } from 'rxjs/operators';
+import { Room } from './app/resources/models/room';
+import { Facility } from './app/resources/models/facility';
+import { Booking } from './app/resources/models/booking';
 
 interface InitialState {
   username: string;
   isLogged: boolean;
-  hotels: Hotel[];
+  // hotels: Hotel[];
   rooms: Room[];
   facilities: Facility[];
   bookings: Booking[];
   startDate: string;
   endDate: string;
+  isDisabled: boolean;
 }
 
 const initialState: InitialState = {
   username: null,
   isLogged: false,
-  hotels: [],
+  // hotels: [],
   rooms: [],
   facilities: [],
   bookings: [],
   startDate: null,
-  endDate: null
+  endDate: null,
+  isDisabled: false
 };
 
 export class Store {
-
   private subject = new BehaviorSubject<InitialState>(initialState);
   private store = this.subject.asObservable().pipe(distinctUntilChanged());
 
@@ -41,7 +41,6 @@ export class Store {
   }
 
   set(name: string, newStateVal: any) {
-    this.subject.next({...this.subject.value, [name]: newStateVal});
+    this.subject.next({ ...this.subject.value, [name]: newStateVal });
   }
-
 }
