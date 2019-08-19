@@ -13,14 +13,17 @@ import {
   MatDialogModule,
   MatMenuModule,
   MatDatepickerModule,
-  MatNativeDateModule, MatAutocompleteModule, MatTabsModule, MatListModule, MatDividerModule, MatProgressBarModule
+  MatNativeDateModule,
+  MatAutocompleteModule,
+  MatTabsModule,
+  MatListModule,
+  MatDividerModule,
+  MatProgressBarModule
 } from '@angular/material';
 
 @NgModule({
   declarations: [],
-  imports: [
-    CommonModule
-  ],
+  imports: [CommonModule],
   exports: [
     MatButtonModule,
     MatToolbarModule,
@@ -42,4 +45,4 @@ import {
     MatProgressBarModule
   ]
 })
-export class CustomMaterialModule { }
+export class CustomMaterialModule {}

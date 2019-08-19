@@ -1,10 +1,10 @@
-import {Component, OnInit} from '@angular/core';
-import {MatDialog} from '@angular/material';
-import {LoginDialogComponent} from '../../../user/login-dialog/login-dialog.component';
-import {Observable} from 'rxjs';
-import {UserService} from '../../../../services/user.service';
-import {Router} from '@angular/router';
-import {Store} from '../../../../../store';
+import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material';
+import { LoginDialogComponent } from '../../../user/login-dialog/login-dialog.component';
+import { Observable } from 'rxjs';
+import { UserService } from '../../../../services/user.service';
+import { Router } from '@angular/router';
+import { Store } from '../../../../../store';
 
 @Component({
   selector: 'app-toolbar',
@@ -12,17 +12,18 @@ import {Store} from '../../../../../store';
   styleUrls: ['./toolbar.component.scss']
 })
 export class ToolbarComponent implements OnInit {
-
   isLogged$: Observable<boolean>;
 
-  constructor(public dialog: MatDialog, private userService: UserService, private router: Router, private store: Store) {
-
-  }
+  constructor(
+    public dialog: MatDialog,
+    private userService: UserService,
+    private router: Router,
+    private store: Store
+  ) {}
 
   ngOnInit(): void {
     this.userService.isAuthenticated().subscribe();
     this.isLogged$ = this.store.select<boolean>('isLogged');
-
   }
 
   onLogin(): void {
