@@ -27,15 +27,13 @@ import {
 } from './modules/main-page/+state/main-page.reducer';
 import { EffectsModule } from '@ngrx/effects';
 import { MainPageEffects } from './modules/main-page/+state/main-page.effects';
+import { MainPageModule } from './modules/main-page/main-page.module';
 
 @NgModule({
   declarations: [
     AppComponent,
-    LandingPageComponent,
     LoginDialogComponent,
     UserProfileComponent,
-    SearchHotelsListComponent,
-    SearchBoxComponent,
     UserBookingsComponent,
     HotelDetailsComponent,
     HotelDetailsViewComponent
@@ -48,19 +46,17 @@ import { MainPageEffects } from './modules/main-page/+state/main-page.effects';
     SharedModule,
     HttpClientModule,
     RouterModule,
-    StoreModule.forFeature(MAIN_PAGE_FEATURE_KEY, mainPageReducer, { initialState }),
-    EffectsModule.forFeature([MainPageEffects]),
     StoreModule.forRoot(
       {},
       {
         runtimeChecks: { strictStateImmutability: true, strictActionImmutability: true }
       }
     ),
-    EffectsModule.forRoot([])
+    EffectsModule.forRoot([]),
+    MainPageModule
   ],
   entryComponents: [LoginDialogComponent],
   providers: [
-    MainPageFacade,
     Store,
     {
       provide: HTTP_INTERCEPTORS,

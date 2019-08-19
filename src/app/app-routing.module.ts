@@ -1,18 +1,21 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-import {LandingPageComponent} from './containers/landing-page/landing-page.component';
-import {UserProfileComponent} from './modules/user/user-profile/user-profile.component';
-import {AuthGuardService as AuthGuard} from './auth/auth-guard.service';
-import {HotelDetailsComponent} from './containers/hotel-details/hotel-details.component';
+import { RouterModule, Routes } from '@angular/router';
+import { UserProfileComponent } from './modules/user/user-profile/user-profile.component';
+import { AuthGuardService as AuthGuard } from './auth/auth-guard.service';
+import { HotelDetailsComponent } from './modules/hotel-details/containers/hotel-details/hotel-details.component';
 
 const routes: Routes = [
-  { path: '', component: LandingPageComponent},
+  {
+    path: '',
+    loadChildren: () =>
+      import('./modules/main-page/main-page.module').then(mod => mod.MainPageModule)
+  },
   { path: 'hotel-details', component: HotelDetailsComponent },
-  { path: 'my-profile', component: UserProfileComponent, canActivate: [AuthGuard] },
+  { path: 'my-profile', component: UserProfileComponent, canActivate: [AuthGuard] }
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}
