@@ -1,19 +1,24 @@
 <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
   <mat-form-field>
-    <input matInput placeholder="login" formControlName="login">
+    <input matInput placeholder="login" formControlName="login" />
   </mat-form-field>
   <mat-form-field *ngIf="isRegisterView">
-    <input matInput type="email" placeholder="email" formControlName="email">
+    <input matInput type="email" placeholder="email" formControlName="email" />
   </mat-form-field>
   <mat-form-field>
-    <input matInput type="password" placeholder="password" formControlName="password">
+    <input matInput type="password" placeholder="password" formControlName="password" />
   </mat-form-field>
   <mat-form-field *ngIf="isRegisterView">
-    <input matInput type="password" placeholder="repeat password" formControlName="repeatPassword">
+    <input
+      matInput
+      type="password"
+      placeholder="repeat password"
+      formControlName="repeatPassword"
+    />
   </mat-form-field>
   <mat-checkbox formControlName="rememberMe">remember me</mat-checkbox>
   <button mat-flat-button color="primary" type="submit">
-    {{ getButtonName() }}
+    {{ buttonText }}
   </button>
   <button mat-button type="button" mat-dialog-close>cancel</button>
 </form>
