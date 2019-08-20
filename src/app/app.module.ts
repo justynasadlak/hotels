@@ -18,6 +18,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { MainPageModule } from './modules/main-page/main-page.module';
 import { StoreRouterConnectingModule } from '@ngrx/router-store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { HotelDetailsModule } from './modules/hotel-details/hotel-details.module';
 
 @NgModule({
   declarations: [AppComponent, LoginDialogComponent, UserProfileComponent, UserBookingsComponent],
@@ -37,6 +38,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
     ),
     EffectsModule.forRoot([]),
     MainPageModule,
+    HotelDetailsModule,
     StoreRouterConnectingModule.forRoot(),
     StoreDevtoolsModule.instrument({ maxAge: 50 })
   ],
