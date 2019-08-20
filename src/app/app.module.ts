@@ -13,21 +13,14 @@ import { UserProfileComponent } from './modules/user/user-profile/user-profile.c
 import { Store } from '../store';
 import { UserBookingsComponent } from './modules/user/user-bookings/user-bookings.component';
 import { RouterModule } from '@angular/router';
-import { HotelDetailsComponent } from './modules/hotel-details/containers/hotel-details/hotel-details.component';
-import { HotelDetailsViewComponent } from './modules/hotel-details/components/hotel-details-view/hotel-details-view.component';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { MainPageModule } from './modules/main-page/main-page.module';
+import { StoreRouterConnectingModule } from '@ngrx/router-store';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    LoginDialogComponent,
-    UserProfileComponent,
-    UserBookingsComponent,
-    HotelDetailsComponent,
-    HotelDetailsViewComponent
-  ],
+  declarations: [AppComponent, LoginDialogComponent, UserProfileComponent, UserBookingsComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -43,7 +36,9 @@ import { MainPageModule } from './modules/main-page/main-page.module';
       }
     ),
     EffectsModule.forRoot([]),
-    MainPageModule
+    MainPageModule,
+    StoreRouterConnectingModule.forRoot(),
+    StoreDevtoolsModule.instrument({ maxAge: 50 })
   ],
   entryComponents: [LoginDialogComponent],
   providers: [
