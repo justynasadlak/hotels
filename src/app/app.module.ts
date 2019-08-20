@@ -19,6 +19,11 @@ import { MainPageModule } from './modules/main-page/main-page.module';
 import { StoreRouterConnectingModule } from '@ngrx/router-store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { HotelDetailsModule } from './modules/hotel-details/hotel-details.module';
+import {
+  initialState,
+  SEARCH_DATES_FEATURE_KEY,
+  searchDatesReducer
+} from './+state/search-dates/search-dates.reducer';
 
 @NgModule({
   declarations: [AppComponent, LoginDialogComponent, UserProfileComponent, UserBookingsComponent],
@@ -30,6 +35,7 @@ import { HotelDetailsModule } from './modules/hotel-details/hotel-details.module
     SharedModule,
     HttpClientModule,
     RouterModule,
+    StoreModule.forFeature(SEARCH_DATES_FEATURE_KEY, searchDatesReducer, { initialState }),
     StoreModule.forRoot(
       {},
       {
