@@ -16,5 +16,14 @@ export class UserEffects {
     })
   );
 
+  @Effect()
+  getIsLogged$ = this.actions$.pipe(
+    ofType(fromUserActions.Types.GetIsLogged),
+    switchMap(() => {
+      return this.userService
+        .isAuthenticated()
+        .pipe(map(response => new fromUserActions.GetIsLoggedSuccess(!!response)));
+    })
+  );
   constructor(private actions$: Actions, private userService: UserService) {}
 }
