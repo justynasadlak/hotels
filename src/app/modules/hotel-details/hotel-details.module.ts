@@ -5,11 +5,12 @@ import { HotelDetailsViewComponent } from './components/hotel-details-view/hotel
 import { HotelDetailsRoutingModule } from './hotel-details-routing.module';
 import { SharedModule } from '../shared/shared.module';
 import { Store } from '../../../store';
+import { SearchDatesFacade } from '../../+state/search-dates/search-dates.facade';
 
 @NgModule({
   declarations: [HotelDetailsComponent, HotelDetailsViewComponent],
   exports: [HotelDetailsComponent],
   imports: [CommonModule, SharedModule, HotelDetailsRoutingModule],
-  providers: [Store]
+  providers: [SearchDatesFacade, Store]
 })
 export class HotelDetailsModule {}
