@@ -7,7 +7,6 @@ import { combineLatest, Observable, of } from 'rxjs';
 import { first, map, tap } from 'rxjs/operators';
 import { Room } from '../../../../resources/models/room';
 import { Store } from '../../../../../store';
-import { Facility } from '../../../../resources/models/facility';
 import { SearchData } from '../../../../resources/models/searchData';
 import { Booking } from '../../../../resources/models/booking';
 import { LoginDialogComponent } from '../../../user/login-dialog/login-dialog.component';
@@ -58,11 +57,15 @@ export class LandingPageComponent implements OnInit {
     console.log(searchValues.checkOut);
     this.store.set('startDate', new Date(searchValues.checkIn).toISOString());
     this.store.set('endDate', new Date(searchValues.checkOut).toISOString());
+    console.log('this.store.value.startDate');
+    console.log(this.store.value.startDate);
     this.location = searchValues.city;
     // this.filterHotels$ = this.hotels$.pipe(map(hotels => hotels.filter(h => h.location === this.location)));
     console.log(searchValues);
 
-    this.filterHotelsBySearchValues(searchValues).subscribe(val => (this.hotelsResults = of(val)));
+    this.filterHotelsBySearchValues(searchValues)
+      .pipe(first())
+      .subscribe(val => (this.hotelsResults = of(val)));
     return this.hotelsResults;
   }
 
@@ -98,7 +101,7 @@ export class LandingPageComponent implements OnInit {
   private getHotels(): void {
     this.mainPageFacade.getHotels();
     console.log('this.hotels$');
-    this.hotels$.pipe(first()).subscribe(console.log);
+    // this.hotels$.pipe(first()).subscribe(console.log);
 
     // this.hotelService.getAllHotels().subscribe(hotels => {
     //   this.getRooms();
@@ -109,7 +112,7 @@ export class LandingPageComponent implements OnInit {
     //   // this.hotels$ = this.store.select<Hotel[]>('hotels');
     this.locations$ = this.getLocations();
     console.log('this.locations$');
-    this.locations$.pipe(first()).subscribe(console.log);
+    // this.locations$.pipe(first()).subscribe(console.log);
     this.progressBar = false;
     // });
   }
@@ -132,7 +135,7 @@ export class LandingPageComponent implements OnInit {
 
   private getBookings(): void {
     this.mainPageFacade.getBookings();
-    this.bookings$.subscribe(console.log);
+    // this.bookings$.subscribe(console.log);
     // this.bookingService
     //   .getAllBookings()
     //   .subscribe(bookings => (this.bookings$ = this.store.select<Booking[]>('bookings')));
@@ -160,14 +163,21 @@ export class LandingPageComponent implements OnInit {
     hotelsInLocation: Hotel[],
     numberOfGuests: number
   ): Hotel[] {
-    hotelsInLocation.forEach(hotel => {
-      hotel.rooms =
-        bookingsOnThisDate.length > 0
-          ? this.getFreeRoomsOnThisDate(bookingsOnThisDate, hotel.rooms)
-          : hotel.rooms;
-      hotel.rooms = this.getRoomsByCapacity(hotel.rooms, numberOfGuests);
+    return hotelsInLocation.map(hotel => {
+      const freeRoomsOnDate = bookingsOnThisDate.length
+        ? this.getFreeRoomsOnThisDate(bookingsOnThisDate, hotel.rooms)
+        : hotel.rooms;
+
+      const freeRooms = this.getRoomsByCapacity(freeRoomsOnDate, numberOfGuests);
+
+      return { ...hotel, rooms: freeRooms };
+
+      // hotel.rooms =
+      //   bookingsOnThisDate.length
+      //     ? this.getFreeRoomsOnThisDate(bookingsOnThisDate, hotel.rooms)
+      //     : hotel.rooms;
+      // hotel.rooms = this.getRoomsByCapacity(hotel.rooms, numberOfGuests);
     });
-    return hotelsInLocation;
   }
 
   private getBookingsOnThisDate(searchValues: SearchData): void {
@@ -182,8 +192,8 @@ export class LandingPageComponent implements OnInit {
             (checkOut >= b.startDate && checkOut < b.endDate) ||
             (checkIn <= b.startDate && checkOut > b.endDate)
         )
-      ),
-      tap(console.log)
+      )
+      // tap(console.log)
     );
   }
 
