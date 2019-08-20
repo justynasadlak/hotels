@@ -11,7 +11,7 @@ export namespace fromSearchDatesActions {
     GetEndDateFail = '[App] Get End Date Fail',
 
     SetStartDate = '[App] Set Start Date',
-    SetStartDateSuccess = '[App] Set Start Date Success'
+    SetEndDate = '[App] Set End Date'
   }
 
   export class GetStartDate implements Action {
@@ -30,10 +30,6 @@ export namespace fromSearchDatesActions {
 
   export class SetStartDate implements Action {
     readonly type = Types.SetStartDate;
-  }
-  export class SetStartDateSuccess implements Action {
-    readonly type = Types.SetStartDateSuccess;
-
     constructor(public payload: string) {}
   }
 
@@ -55,7 +51,6 @@ export namespace fromSearchDatesActions {
     | GetStartDateSuccess
     | GetStartDateFail
     | SetStartDate
-    | SetStartDateSuccess
     | GetEndDate
     | GetEndDateSuccess
     | GetEndDateFail;

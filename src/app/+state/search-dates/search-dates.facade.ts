@@ -11,6 +11,9 @@ export class SearchDatesFacade {
 
   constructor(private store: Store<SearchDatesPartialState>) {}
 
+  setStartDate(date: string) {
+    this.store.dispatch(new fromSearchDatesActions.SetStartDate(date));
+  }
   getStartDate() {
     this.store.dispatch(new fromSearchDatesActions.GetStartDate());
   }
