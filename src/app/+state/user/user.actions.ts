@@ -23,6 +23,7 @@ export namespace fromUserActions {
   export class GetUsernameFail implements Action {
     readonly type = Types.GetUsernameFail;
   }
+
   export class GetIsLogged implements Action {
     readonly type = Types.GetIsLogged;
   }

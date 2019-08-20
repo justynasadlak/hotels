@@ -12,7 +12,7 @@ export interface UserState {
 }
 
 export const initialState: UserState = {
-  username: '',
+  username: null,
   isLogged: false
 };
 

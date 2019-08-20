@@ -19,11 +19,9 @@ import { MainPageModule } from './modules/main-page/main-page.module';
 import { StoreRouterConnectingModule } from '@ngrx/router-store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { HotelDetailsModule } from './modules/hotel-details/hotel-details.module';
-import {
-  initialState,
-  SEARCH_DATES_FEATURE_KEY,
-  searchDatesReducer
-} from './+state/search-dates/search-dates.reducer';
+import { reducers } from './reducers';
+import { UserFacade } from './+state/user/user.facade';
+import { UserEffects } from './+state/user/user.effects';
 
 @NgModule({
   declarations: [AppComponent, LoginDialogComponent, UserProfileComponent, UserBookingsComponent],
@@ -35,14 +33,10 @@ import {
     SharedModule,
     HttpClientModule,
     RouterModule,
-    StoreModule.forFeature(SEARCH_DATES_FEATURE_KEY, searchDatesReducer, { initialState }),
-    StoreModule.forRoot(
-      {},
-      {
-        runtimeChecks: { strictStateImmutability: true, strictActionImmutability: true }
-      }
-    ),
-    EffectsModule.forRoot([]),
+    StoreModule.forRoot(reducers, {
+      runtimeChecks: { strictStateImmutability: true, strictActionImmutability: true }
+    }),
+    EffectsModule.forRoot([UserEffects]),
     MainPageModule,
     HotelDetailsModule,
     StoreRouterConnectingModule.forRoot(),
@@ -50,6 +44,7 @@ import {
   ],
   entryComponents: [LoginDialogComponent],
   providers: [
+    UserFacade,
     Store,
     {
       provide: HTTP_INTERCEPTORS,
