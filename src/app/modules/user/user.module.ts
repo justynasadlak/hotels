@@ -18,7 +18,6 @@ import { initialState, USER_FEATURE_KEY, userReducer } from '../../+state/user/u
     SharedModule,
     UserRoutingModule,
     StoreModule.forFeature(USER_FEATURE_KEY, userReducer, { initialState }),
-
     EffectsModule.forFeature([UserEffects])
   ],
   providers: [UserFacade]

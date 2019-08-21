@@ -1,5 +1,6 @@
 import { fromUserActions } from './user.actions';
 import { UserData } from '../../resources/models/userData';
+import { fromSearchDatesActions } from '../search-dates/search-dates.actions';
 
 export const USER_FEATURE_KEY = 'user';
 
@@ -29,6 +30,12 @@ export function userReducer(
       break;
     case fromUserActions.Types.GetUsernameSuccess:
       state = { ...state, username: action.payload };
+      break;
+    case fromUserActions.Types.SetUsername:
+      state = { ...state, username: action.payload };
+      break;
+    case fromUserActions.Types.SetIsLogged:
+      state = { ...state, isLogged: action.payload };
       break;
     case fromUserActions.Types.GetIsLogged:
       state = { ...state };

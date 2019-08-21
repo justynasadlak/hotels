@@ -25,10 +25,10 @@ export class UserService {
     return this.http
       .get('http://185.157.80.88:8080/api/authenticate', { responseType: 'text' })
       .pipe(
-        delay(1000),
+        // delay(1000),
         tap(response => {
-          this.store.set('username', response);
-          this.store.set('isLogged', !!response);
+          // this.store.set('username', response);
+          // this.store.set('isLogged', !!response);
         })
       );
   }
@@ -37,13 +37,13 @@ export class UserService {
     return this.http.post<UserData>('http://185.157.80.88:8080/api/register', userData);
   }
 
-  login() {
-    this.store.set('isLogged', true);
-  }
+  // login() {
+  //   this.store.set('isLogged', true);
+  // }
 
   logout() {
     localStorage.removeItem('token');
-    this.store.set('isLogged', false);
-    this.store.set('username', null);
+    // this.store.set('isLogged', false);
+    // this.store.set('username', null);
   }
 }

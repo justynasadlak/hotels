@@ -13,7 +13,10 @@ export namespace fromUserActions {
 
     GetUserData = '[App] Get UserData',
     GetUserDataSuccess = '[App] Get UserData Success',
-    GetUserDataFail = '[App] Get UserData Fail'
+    GetUserDataFail = '[App] Get UserData Fail',
+
+    SetUsername = '[App] Set Username',
+    SetIsLogged = '[App] Get isLogged'
   }
 
   export class GetUsername implements Action {
@@ -27,6 +30,16 @@ export namespace fromUserActions {
 
   export class GetUsernameFail implements Action {
     readonly type = Types.GetUsernameFail;
+  }
+  export class SetUsername implements Action {
+    readonly type = Types.SetUsername;
+
+    constructor(public payload: string) {}
+  }
+  export class SetIsLogged implements Action {
+    readonly type = Types.SetIsLogged;
+
+    constructor(public payload: boolean) {}
   }
 
   export class GetIsLogged implements Action {
@@ -66,5 +79,7 @@ export namespace fromUserActions {
     | GetIsLoggedFail
     | GetUserData
     | GetUserDataSuccess
-    | GetUserDataFail;
+    | GetUserDataFail
+    | SetUsername
+    | SetIsLogged;
 }

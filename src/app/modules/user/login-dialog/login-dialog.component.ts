@@ -75,7 +75,8 @@ export class LoginDialogComponent implements OnInit {
     this.userService.getUserToken(user).subscribe(
       data => {
         localStorage.setItem('token', data.id_token);
-        this.userService.login();
+        this.userFacade.login();
+        // this.userService.login();
         this.userFacade.getUsername();
         this.dialogRef.close();
       },

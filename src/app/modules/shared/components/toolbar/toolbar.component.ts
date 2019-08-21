@@ -1,10 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { LoginDialogComponent } from '../../../user/login-dialog/login-dialog.component';
-import { Observable } from 'rxjs';
 import { UserService } from '../../../../services/user.service';
 import { Router } from '@angular/router';
-import { Store } from '../../../../../store';
+import { UserFacade } from '../../../../+state/user/user.facade';
 
 @Component({
   selector: 'app-toolbar',
@@ -12,18 +11,21 @@ import { Store } from '../../../../../store';
   styleUrls: ['./toolbar.component.scss']
 })
 export class ToolbarComponent implements OnInit {
-  isLogged$: Observable<boolean>;
+  // isLogged$: Observable<boolean>;
+  isLogged$ = this.userFacade.isLogged$;
 
   constructor(
     public dialog: MatDialog,
     private userService: UserService,
     private router: Router,
-    private store: Store
+    private userFacade: UserFacade
   ) {}
 
   ngOnInit(): void {
-    this.userService.isAuthenticated().subscribe();
-    this.isLogged$ = this.store.select<boolean>('isLogged');
+    // this.userService.isAuthenticated().subscribe();
+    // this.isLogged$ = this.store.select<boolean>('isLogged');
+    this.userFacade.getIsLogged();
+    this.isLogged$ = this.userFacade.isLogged$;
   }
 
   onLogin(): void {
@@ -37,6 +39,7 @@ export class ToolbarComponent implements OnInit {
   }
 
   onLogout(): void {
+    this.userFacade.logout();
     this.userService.logout();
     this.router.navigate(['']);
   }
