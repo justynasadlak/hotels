@@ -6,11 +6,22 @@ import { HotelDetailsRoutingModule } from './hotel-details-routing.module';
 import { SharedModule } from '../shared/shared.module';
 import { Store } from '../../../store';
 import { SearchDatesFacade } from '../../+state/search-dates/search-dates.facade';
+import { StoreModule } from '@ngrx/store';
+import {
+  initialState,
+  SEARCH_DATES_FEATURE_KEY,
+  searchDatesReducer
+} from '../../+state/search-dates/search-dates.reducer';
 
 @NgModule({
   declarations: [HotelDetailsComponent, HotelDetailsViewComponent],
   exports: [HotelDetailsComponent],
-  imports: [CommonModule, SharedModule, HotelDetailsRoutingModule],
+  imports: [
+    CommonModule,
+    SharedModule,
+    HotelDetailsRoutingModule,
+    StoreModule.forFeature(SEARCH_DATES_FEATURE_KEY, searchDatesReducer, { initialState })
+  ],
   providers: [SearchDatesFacade, Store]
 })
 export class HotelDetailsModule {}

@@ -4,10 +4,12 @@ import { Store } from '../../../../../store';
 import { HotelService } from '../../../../services/hotel.service';
 import { BookingService } from '../../../../services/booking.service';
 import { Booking } from '../../../../resources/models/booking';
-import { tap } from 'rxjs/operators';
+import { filter, first, tap } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 import { Facility } from '../../../../resources/models/facility';
 import { Room } from '../../../../resources/models/room';
+import { SearchDatesFacade } from '../../../../+state/search-dates/search-dates.facade';
+import { UserFacade } from '../../../../+state/user/user.facade';
 
 @Component({
   selector: 'app-hotel-details',
@@ -32,6 +34,8 @@ export class HotelDetailsComponent implements OnInit {
   public constructor(
     private route: ActivatedRoute,
     private store: Store,
+    private searchDatesFacade: SearchDatesFacade,
+    private userFacade: UserFacade,
     private hotelService: HotelService,
     private bookingService: BookingService,
     private router: Router
@@ -45,22 +49,25 @@ export class HotelDetailsComponent implements OnInit {
       this.facilities = JSON.parse(params.facilities);
       this.rooms = JSON.parse(params.rooms);
     });
+    this.userFacade.getUsername();
   }
 
   onBook(roomId: string): Observable<Booking> {
     this.isDisabled = true;
     this.hotelService.getRoom(roomId).subscribe(room => {
       this.roomsToBook.push(room);
+      this.getUsername();
+
       this.getStartDate();
       this.getEndDate();
-      this.getUsername();
+
       this.bookingData = {
         user: this.username,
         startDate: this.startDate,
         endDate: this.endDate,
         rooms: this.roomsToBook
       };
-
+      console.log(this.bookingData);
       this.bookingService.addBooking(this.bookingData).subscribe(
         val => {
           // this.progressBar = false;
@@ -77,23 +84,20 @@ export class HotelDetailsComponent implements OnInit {
   }
 
   private getStartDate(): void {
-    this.store
-      .select('startDate')
-      .pipe(tap(date => (this.startDate = date.toString())))
-      .subscribe();
+    this.searchDatesFacade
+      .getStartDate()
+      .pipe(first())
+      .subscribe(date => (this.startDate = date));
   }
 
   private getEndDate(): void {
-    this.store
-      .select('endDate')
-      .pipe(tap(date => (this.endDate = date.toString())))
-      .subscribe();
+    this.searchDatesFacade
+      .getEndDate()
+      .pipe(first())
+      .subscribe(date => (this.endDate = date));
   }
 
   private getUsername(): void {
-    this.store
-      .select('username')
-      .pipe(tap(user => (this.username = user.toString())))
-      .subscribe();
+    this.userFacade.username$.subscribe(username => (this.username = username));
   }
 }
