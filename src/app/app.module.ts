@@ -22,9 +22,10 @@ import { HotelDetailsModule } from './modules/hotel-details/hotel-details.module
 import { reducers } from './reducers';
 import { UserFacade } from './+state/user/user.facade';
 import { UserEffects } from './+state/user/user.effects';
+import { UserModule } from './modules/user/user.module';
 
 @NgModule({
-  declarations: [AppComponent, LoginDialogComponent, UserProfileComponent, UserBookingsComponent],
+  declarations: [AppComponent, LoginDialogComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -40,6 +41,7 @@ import { UserEffects } from './+state/user/user.effects';
     EffectsModule.forRoot([UserEffects]),
     MainPageModule,
     HotelDetailsModule,
+    UserModule,
     StoreRouterConnectingModule.forRoot(),
     StoreDevtoolsModule.instrument({ maxAge: 50 })
   ],

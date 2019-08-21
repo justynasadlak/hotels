@@ -14,7 +14,11 @@ const routes: Routes = [
     loadChildren: () =>
       import('./modules/hotel-details/hotel-details.module').then(mod => mod.HotelDetailsModule)
   },
-  { path: 'my-profile', component: UserProfileComponent, canActivate: [AuthGuard] }
+  {
+    path: 'my-profile',
+    loadChildren: () => import('./modules/user/user.module').then(mod => mod.UserModule),
+    canActivate: [AuthGuard]
+  }
 ];
 
 @NgModule({
