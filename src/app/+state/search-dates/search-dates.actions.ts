@@ -3,12 +3,7 @@ import { Action } from '@ngrx/store';
 export namespace fromSearchDatesActions {
   export enum Types {
     GetStartDate = '[App] Get Start Date',
-    GetStartDateSuccess = '[App] Get Start Date Success',
-    GetStartDateFail = '[App] Get Start Date Fail',
-
     GetEndDate = '[App] Get End Date',
-    GetEndDateSuccess = '[App] Get EndDate Success',
-    GetEndDateFail = '[App] Get End Date Fail',
 
     SetStartDate = '[App] Set Start Date',
     SetEndDate = '[App] Set End Date'
@@ -18,18 +13,13 @@ export namespace fromSearchDatesActions {
     readonly type = Types.GetStartDate;
   }
 
-  export class GetStartDateSuccess implements Action {
-    readonly type = Types.GetStartDateSuccess;
-
+  export class SetStartDate implements Action {
+    readonly type = Types.SetStartDate;
     constructor(public payload: string) {}
   }
 
-  export class GetStartDateFail implements Action {
-    readonly type = Types.GetStartDateFail;
-  }
-
-  export class SetStartDate implements Action {
-    readonly type = Types.SetStartDate;
+  export class SetEndDate implements Action {
+    readonly type = Types.SetEndDate;
     constructor(public payload: string) {}
   }
 
@@ -37,21 +27,5 @@ export namespace fromSearchDatesActions {
     readonly type = Types.GetEndDate;
   }
 
-  export class GetEndDateSuccess implements Action {
-    readonly type = Types.GetEndDateSuccess;
-
-    constructor(public payload: string) {}
-  }
-
-  export class GetEndDateFail implements Action {
-    readonly type = Types.GetEndDateFail;
-  }
-  export type CollectiveType =
-    | GetStartDate
-    | GetStartDateSuccess
-    | GetStartDateFail
-    | SetStartDate
-    | GetEndDate
-    | GetEndDateSuccess
-    | GetEndDateFail;
+  export type CollectiveType = GetStartDate | SetStartDate | SetEndDate | GetEndDate;
 }

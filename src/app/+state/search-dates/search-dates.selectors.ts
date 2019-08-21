@@ -3,24 +3,19 @@ import { SEARCH_DATES_FEATURE_KEY, SearchDatesState } from './search-dates.reduc
 
 const getSearchDatesState = createFeatureSelector<SearchDatesState>(SEARCH_DATES_FEATURE_KEY);
 
-const getStartDate = createSelector(
-  getSearchDatesState,
-  state => state.startDate
-);
-
-const setStartDate = date =>
+const getStartDate = () =>
   createSelector(
     getSearchDatesState,
-    state => (state.startDate = date)
+    state => state.startDate
   );
 
-const getEndDate = createSelector(
-  getSearchDatesState,
-  state => state.endDate
-);
+const getEndDate = () =>
+  createSelector(
+    getSearchDatesState,
+    state => state.endDate
+  );
 
 export const searchDatesQuery = {
   getStartDate,
-  setStartDate,
   getEndDate
 };

@@ -13,6 +13,8 @@ import { LoginDialogComponent } from '../../../user/login-dialog/login-dialog.co
 import { MatDialog } from '@angular/material';
 import { HotelService } from '../../../../services/hotel.service';
 import { MainPageFacade } from '../../+state/main-page.facade';
+import { UserFacade } from '../../../../+state/user/user.facade';
+import { SearchDatesFacade } from '../../../../+state/search-dates/search-dates.facade';
 
 @Component({
   selector: 'app-landing-page',
@@ -27,6 +29,7 @@ export class LandingPageComponent implements OnInit {
   filterHotels$: Observable<Hotel[]>;
 
   hotels$ = this.mainPageFacade.hotels$;
+  username$ = this.userFacade.username$;
 
   private rooms: Room[] = [];
   private location: string;
@@ -39,6 +42,8 @@ export class LandingPageComponent implements OnInit {
 
   constructor(
     private mainPageFacade: MainPageFacade,
+    private userFacade: UserFacade,
+    private searchDatesFacade: SearchDatesFacade,
     private bookingService: BookingService,
     private hotelService: HotelService,
     private formBuilder: FormBuilder,
@@ -50,15 +55,17 @@ export class LandingPageComponent implements OnInit {
   ngOnInit(): void {
     this.getHotels();
     this.getBookings();
+
+    this.userFacade.getUsername();
+    // this.userFacade.username$.subscribe(x => console.log(x));
   }
 
   onSearch(searchValues: SearchData): Observable<Hotel[]> {
-    console.log(searchValues.checkIn);
-    console.log(searchValues.checkOut);
-    this.store.set('startDate', new Date(searchValues.checkIn).toISOString());
-    this.store.set('endDate', new Date(searchValues.checkOut).toISOString());
-    console.log('this.store.value.startDate');
-    console.log(this.store.value.startDate);
+    this.searchDatesFacade.setStartDate(new Date(searchValues.checkIn).toISOString());
+    this.searchDatesFacade.setEndDate(new Date(searchValues.checkOut).toISOString());
+    // this.searchDatesFacade.startDate$.subscribe(console.log);
+    // this.store.set('startDate', new Date(searchValues.checkIn).toISOString());
+    // this.store.set('endDate', new Date(searchValues.checkOut).toISOString());
     this.location = searchValues.city;
     // this.filterHotels$ = this.hotels$.pipe(map(hotels => hotels.filter(h => h.location === this.location)));
     console.log(searchValues);
@@ -100,7 +107,6 @@ export class LandingPageComponent implements OnInit {
 
   private getHotels(): void {
     this.mainPageFacade.getHotels();
-    console.log('this.hotels$');
     // this.hotels$.pipe(first()).subscribe(console.log);
 
     // this.hotelService.getAllHotels().subscribe(hotels => {
@@ -111,7 +117,6 @@ export class LandingPageComponent implements OnInit {
     //
     //   // this.hotels$ = this.store.select<Hotel[]>('hotels');
     this.locations$ = this.getLocations();
-    console.log('this.locations$');
     // this.locations$.pipe(first()).subscribe(console.log);
     this.progressBar = false;
     // });

@@ -18,6 +18,9 @@ export class SearchDatesFacade {
     this.store.dispatch(new fromSearchDatesActions.GetStartDate());
   }
 
+  setEndDate(date: string) {
+    this.store.dispatch(new fromSearchDatesActions.SetEndDate(date));
+  }
   getEndDate() {
     this.store.dispatch(new fromSearchDatesActions.GetEndDate());
   }
