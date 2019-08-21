@@ -4,9 +4,8 @@ import { Hotel } from '../../../../resources/models/hotel';
 import { FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 import { combineLatest, Observable, of } from 'rxjs';
-import { first, map, tap } from 'rxjs/operators';
+import { first, map } from 'rxjs/operators';
 import { Room } from '../../../../resources/models/room';
-import { Store } from '../../../../../store';
 import { SearchData } from '../../../../resources/models/searchData';
 import { Booking } from '../../../../resources/models/booking';
 import { LoginDialogComponent } from '../../../user/login-dialog/login-dialog.component';
@@ -29,7 +28,6 @@ export class LandingPageComponent implements OnInit {
   filterHotels$: Observable<Hotel[]>;
 
   hotels$ = this.mainPageFacade.hotels$;
-  username$ = this.userFacade.username$;
 
   private rooms: Room[] = [];
   private location: string;
@@ -48,24 +46,17 @@ export class LandingPageComponent implements OnInit {
     private hotelService: HotelService,
     private formBuilder: FormBuilder,
     private router: Router,
-    private store: Store,
     public dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
     this.getHotels();
     this.getBookings();
-
-    this.userFacade.getUsername();
-    // this.userFacade.username$.subscribe(x => console.log(x));
   }
 
   onSearch(searchValues: SearchData): Observable<Hotel[]> {
     this.searchDatesFacade.setStartDate(new Date(searchValues.checkIn).toISOString());
     this.searchDatesFacade.setEndDate(new Date(searchValues.checkOut).toISOString());
-    // this.searchDatesFacade.startDate$.subscribe(console.log);
-    // this.store.set('startDate', new Date(searchValues.checkIn).toISOString());
-    // this.store.set('endDate', new Date(searchValues.checkOut).toISOString());
     this.location = searchValues.city;
     // this.filterHotels$ = this.hotels$.pipe(map(hotels => hotels.filter(h => h.location === this.location)));
     console.log(searchValues);
