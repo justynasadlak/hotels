@@ -5,6 +5,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { User } from '../../../resources/models/user';
 import { UserData } from '../../../resources/models/userData';
 import { Store } from '../../../../store';
+import { UserFacade } from '../../../+state/user/user.facade';
 
 export interface DialogData {
   isRegisterView: boolean;
@@ -25,6 +26,7 @@ export class LoginDialogComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private userService: UserService,
+    private userFacade: UserFacade,
     private store: Store,
     private dialogRef: MatDialogRef<LoginDialogComponent>,
     @Inject(MAT_DIALOG_DATA) private data: DialogData
@@ -74,7 +76,7 @@ export class LoginDialogComponent implements OnInit {
       data => {
         localStorage.setItem('token', data.id_token);
         this.userService.login();
-        this.store.set('username', user.username);
+        this.userFacade.getUsername();
         this.dialogRef.close();
       },
       error => {
