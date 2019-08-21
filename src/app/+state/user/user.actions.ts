@@ -1,4 +1,5 @@
 import { Action } from '@ngrx/store';
+import { UserData } from '../../resources/models/userData';
 
 export namespace fromUserActions {
   export enum Types {
@@ -8,7 +9,11 @@ export namespace fromUserActions {
 
     GetIsLogged = '[App] Get isLogged ',
     GetIsLoggedSuccess = '[App] Get isLogged  Success',
-    GetIsLoggedFail = '[App] Get isLogged Fail'
+    GetIsLoggedFail = '[App] Get isLogged Fail',
+
+    GetUserData = '[App] Get UserData',
+    GetUserDataSuccess = '[App] Get UserData Success',
+    GetUserDataFail = '[App] Get UserData Fail'
   }
 
   export class GetUsername implements Action {
@@ -37,11 +42,29 @@ export namespace fromUserActions {
   export class GetIsLoggedFail implements Action {
     readonly type = Types.GetIsLoggedFail;
   }
+
+  export class GetUserData implements Action {
+    readonly type = Types.GetUserData;
+    constructor(public payload: string) {}
+  }
+  export class GetUserDataSuccess implements Action {
+    readonly type = Types.GetUserDataSuccess;
+
+    constructor(public payload: UserData) {}
+  }
+
+  export class GetUserDataFail implements Action {
+    readonly type = Types.GetUserDataFail;
+  }
+
   export type CollectiveType =
     | GetUsername
     | GetUsernameSuccess
     | GetUsernameFail
     | GetIsLogged
     | GetIsLoggedSuccess
-    | GetIsLoggedFail;
+    | GetIsLoggedFail
+    | GetUserData
+    | GetUserDataSuccess
+    | GetUserDataFail;
 }

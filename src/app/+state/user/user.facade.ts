@@ -8,6 +8,7 @@ import { fromUserActions } from './user.actions';
 export class UserFacade {
   username$ = this.store.pipe(select(userQuery.getUsername));
   isLogged$ = this.store.pipe(select(userQuery.getIsLogged));
+  userData$ = this.store.pipe(select(userQuery.getUserData));
 
   constructor(private store: Store<UserPartialState>) {}
 
@@ -17,5 +18,10 @@ export class UserFacade {
 
   getIsLogged(): void {
     this.store.dispatch(new fromUserActions.GetIsLogged());
+  }
+
+  getUserData(login: string) {
+    this.store.dispatch(new fromUserActions.GetUserData(login));
+    return this.store.pipe(select(userQuery.getUserData()));
   }
 }

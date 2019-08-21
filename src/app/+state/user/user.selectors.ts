@@ -11,4 +11,11 @@ const getIsLogged = createSelector(
   getUserState,
   state => state.isLogged
 );
-export const userQuery = { getUsername, getIsLogged };
+
+const getUserData = () =>
+  createSelector(
+    getUserState,
+    state => state.userData
+  );
+
+export const userQuery = { getUsername, getIsLogged, getUserData };

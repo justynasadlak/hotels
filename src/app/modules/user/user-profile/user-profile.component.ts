@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { UserService } from '../../../services/user.service';
 import { UserData } from '../../../resources/models/userData';
+import { UserFacade } from '../../../+state/user/user.facade';
 
 @Component({
   selector: 'app-user-profile',
@@ -8,15 +8,15 @@ import { UserData } from '../../../resources/models/userData';
   styleUrls: ['./user-profile.component.scss']
 })
 export class UserProfileComponent implements OnInit {
-  private userData: UserData;
+  userData: UserData;
 
-  constructor(private userService: UserService) {}
+  constructor(private userFacade: UserFacade) {}
 
   ngOnInit(): void {
-    this.userService
-      .isAuthenticated()
-      .subscribe(login =>
-        this.userService.getUserData(login).subscribe(data => (this.userData = data))
-      );
+    this.userFacade.username$.subscribe(login =>
+      this.userFacade.getUserData(login).subscribe(data => {
+        this.userData = data;
+      })
+    );
   }
 }

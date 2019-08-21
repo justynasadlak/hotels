@@ -1,4 +1,5 @@
 import { fromUserActions } from './user.actions';
+import { UserData } from '../../resources/models/userData';
 
 export const USER_FEATURE_KEY = 'user';
 
@@ -9,11 +10,13 @@ export interface UserPartialState {
 export interface UserState {
   username: string;
   isLogged: boolean;
+  userData: UserData;
 }
 
 export const initialState: UserState = {
   username: null,
-  isLogged: false
+  isLogged: false,
+  userData: null
 };
 
 export function userReducer(
@@ -32,6 +35,12 @@ export function userReducer(
       break;
     case fromUserActions.Types.GetIsLoggedSuccess:
       state = { ...state, isLogged: action.payload };
+      break;
+    case fromUserActions.Types.GetUserData:
+      state = { ...state };
+      break;
+    case fromUserActions.Types.GetUserDataSuccess:
+      state = { ...state, userData: action.payload };
       break;
   }
   return state;

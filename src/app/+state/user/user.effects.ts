@@ -25,5 +25,15 @@ export class UserEffects {
         .pipe(map(response => new fromUserActions.GetIsLoggedSuccess(!!response)));
     })
   );
+
+  @Effect()
+  getUserData$ = this.actions$.pipe(
+    ofType(fromUserActions.Types.GetUserData),
+    switchMap(login => {
+      return this.userService
+        .getUserData(login.payload)
+        .pipe(map(response => new fromUserActions.GetUserDataSuccess(response)));
+    })
+  );
   constructor(private actions$: Actions, private userService: UserService) {}
 }
