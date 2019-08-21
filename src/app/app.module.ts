@@ -34,6 +34,7 @@ import { UserEffects } from './+state/user/user.effects';
     HttpClientModule,
     RouterModule,
     StoreModule.forRoot(reducers, {
+      initialState: {},
       runtimeChecks: { strictStateImmutability: true, strictActionImmutability: true }
     }),
     EffectsModule.forRoot([UserEffects]),

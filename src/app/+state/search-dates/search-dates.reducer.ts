@@ -24,15 +24,8 @@ export function searchDatesReducer(
     case fromSearchDatesActions.Types.SetStartDate:
       state = { ...state, startDate: action.payload };
       break;
-    case fromSearchDatesActions.Types.GetStartDate:
-      state = { ...state };
-      break;
-
     case fromSearchDatesActions.Types.SetEndDate:
       state = { ...state, endDate: action.payload };
-      break;
-    case fromSearchDatesActions.Types.GetEndDate:
-      state = { ...state };
       break;
   }
   return state;
