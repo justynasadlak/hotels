@@ -1,7 +1,6 @@
 import { Hotel } from '../../../resources/models/hotel';
 import { fromMainPageActions } from './main-page.actions';
 import { Booking } from '../../../resources/models/booking';
-import { act } from '@ngrx/effects';
 
 export const MAIN_PAGE_FEATURE_KEY = 'main-page';
 
@@ -35,6 +34,7 @@ export function mainPageReducer(
       break;
     case fromMainPageActions.Types.GetBookingsSuccess:
       state = { ...state, bookings: action.payload };
+      break;
   }
   return state;
 }

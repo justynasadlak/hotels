@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
-import { Action } from '@ngrx/store';
 import { HotelService } from '../../../services/hotel.service';
 import { fromMainPageActions } from './main-page.actions';
 import { map, switchMap } from 'rxjs/operators';
